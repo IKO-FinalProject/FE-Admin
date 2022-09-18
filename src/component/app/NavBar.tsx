@@ -5,11 +5,11 @@ import { FiShoppingBag, FiShoppingCart } from 'react-icons/fi'
 
 function NavBar() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex  w-[226px] flex-col items-center bg-red-200 ">
       <div className="mt-8 h-[65px] w-[65px] rounded-full bg-[#C4C4C4]"></div>
       <span className="my-2 text-[#1B304A]">Lenssis Admin</span>
 
-      <Select size="xs" color="#C4C4C4" fontSize="xs" borderRadius="2xl" w="60%" h="25px">
+      <Select color="#C4C4C4" fontSize="xs" borderRadius="2xl" w="60%" h="25px">
         <option value="수취인명">수취인명</option>
         <option value="구매자명">구매자명</option>
         <option value="구매자연락처">구매자연락처</option>
