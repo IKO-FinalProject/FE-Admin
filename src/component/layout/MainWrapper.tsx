@@ -9,7 +9,7 @@ function MainWrapper() {
 
       <div className="flex">
         <NavBar />
-        <div className=" w-[calc(100%-226px)]">
+        <div className="w-[calc(100%-226px)] bg-[#E6E8ED]">
           <Outlet />
         </div>
       </div>
