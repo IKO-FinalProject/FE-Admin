@@ -4,13 +4,14 @@ const Input = ({
   label,
   placeholder,
   type,
-  inputWidth,
+  width,
   labelColor,
   labelBold,
   name,
   value,
   onChange,
-  id
+  id,
+  height
 }: any) => {
   return (
     <div className="my-4 flex flex-col justify-center gap-2">
@@ -22,7 +23,7 @@ const Input = ({
           name={name}
           onChange={onChange}
           value={value}
-          className={`h-[35px] w-full rounded-md border border-solid border-[#D9D9D9] w-${inputWidth} pl-2 placeholder-gray-400/60 focus:outline-1 focus:outline-[#ABC8DF]`}
+          className={` rounded-md border border-solid border-[#D9D9D9] ${width} ${height} pl-2 placeholder-gray-400/60 focus:outline-1 focus:outline-[#ABC8DF]`}
           type={type}
           placeholder={placeholder}
           id={id}

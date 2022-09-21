@@ -14,13 +14,14 @@ function Login() {
           <span className="text-2xl font-bold text-[#1B304A]">Login</span>
         </h3>
 
-        <div className="w-[90%] px-6">
+        <div className=" w-[90%] px-6">
           <Input
             name="email"
             label="Email"
             placeholder="Email"
             type="text"
-            inputWidth={'full'}
+            width="w-full"
+            height="h-[40px]"
             labelColor="gray-400"
             labelBold="bold"
           />
@@ -30,17 +31,18 @@ function Login() {
             label="Password"
             placeholder="Password"
             type="password"
-            inputWidth={'full'}
+            width="w-full"
+            height="h-[40px]"
             labelColor="gray-400"
             labelBold="bold"
           />
           <div className="mt-[3rem]">
             <Button
-              width="full"
-              height="[40px]"
+              width="w-full"
+              height="h-[40px]"
               value="로그인"
-              bgColor="[#1B304A]"
-              textColor="white"
+              bgColor="bg-[#1B304A]"
+              textColor="text-white"
               type="submit"
             />
           </div>
