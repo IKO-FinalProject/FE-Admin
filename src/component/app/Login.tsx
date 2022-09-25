@@ -24,6 +24,8 @@ function Login() {
             height="h-[40px]"
             labelColor="gray-400"
             labelBold="bold"
+            flexCol="flex-col"
+            labelHidden="hidden"
           />
 
           <Input
@@ -35,6 +37,8 @@ function Login() {
             height="h-[40px]"
             labelColor="gray-400"
             labelBold="bold"
+            flexCol="flex-col"
+            labelHidden="hidden"
           />
           <div className="mt-[3rem]">
             <Button

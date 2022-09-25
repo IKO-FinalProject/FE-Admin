@@ -3,6 +3,7 @@ import MainWrapper from './component/layout/MainWrapper'
 import Login from './component/app/Login'
 import MainPage from './component/app/MainPage'
 import ProductList from './component/product/ProductList'
+import AddProduct from './component/product/AddProduct'
 import OrderList from './component/order/OrderList'
 import NoticeList from './component/notice/NoticeList'
 import AddNotice from './component/notice/AddNotice'
@@ -16,6 +17,7 @@ const Router = () => {
         <Route element={<MainWrapper />}>
           <Route path="/" element={<MainPage />} />
           <Route path="/productlist" element={<ProductList />} />
+          <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/orderlist" element={<OrderList />} />
           <Route path="/noticelist" element={<NoticeList />} />
           <Route path="/addnotice" element={<AddNotice />} />

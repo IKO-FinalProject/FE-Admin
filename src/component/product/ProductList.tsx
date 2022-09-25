@@ -1,6 +1,5 @@
-function ProductList() {
-    return <div>ProductList</div>
-  }
-  
-  export default ProductList
-  
+import React from 'react'
+
+function ProductList() {}
+
+export default ProductList

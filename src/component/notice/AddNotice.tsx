@@ -1,18 +1,23 @@
 import { useRef, useState } from 'react'
-import { ContentBoxFull } from '../ui/ContentBox'
+import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
 import QuillEditor from './QuillEditor'
 import Button from '../ui/Button'
 
 function AddNotice() {
+  const [titleValue, setTitleValue] = useState(null)
   const [htmlContent, setHtmlContent] = useState('')
   const quillRef = useRef()
 
+  const titleInputHandler = (e: any) => {
+    setTitleValue(e.target.value)
+  }
+
   return (
-    <ContentBoxFull>
+    <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
       <div className="mb-5" style={{ borderBottom: '1px solid #C4C4C4' }}>
         <h1
-          className="flex h-[30px] w-[10%] items-center justify-center  text-[.9rem] font-bold drop-shadow-2xl"
+          className="flex h-[30px] w-[100px] items-center justify-center  text-[.9rem] font-bold drop-shadow-2xl"
           style={{ borderBottom: '3px solid #A4C8E1', textShadow: '0 3px #C4C4C4' }}
         >
           공지사항 작성
@@ -34,7 +39,15 @@ function AddNotice() {
           <option value="">제품/도수</option>
           <option value="">쿠폰/회원 정보</option>
         </select>
-        <Input type="text" placeholder="제목을 입력하세요" id="noticeTitle" label="noticeTitle" />
+        <Input
+          type="text"
+          labelHidden="hidden"
+          placeholder="제목을 입력하세요"
+          id="noticeTitle"
+          label="noticeTitle"
+          onChange={titleInputHandler}
+          width="w-full"
+        />
         <QuillEditor quillRef={quillRef} htmlContent={htmlContent} setHtmlContent={setHtmlContent} />
 
         <div className="mt-[2rem] mb-[5rem] flex justify-between">
@@ -57,7 +70,7 @@ function AddNotice() {
           />
         </div>
       </form>
-    </ContentBoxFull>
+    </ContentBox>
   )
 }
 
