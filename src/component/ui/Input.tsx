@@ -31,3 +31,9 @@ const Input = ({
 }
 
 export default Input
+
+//인풋라벨, 인풋, 인풋 에러 이렇게 나누자
+
+//절대로!!!!!!! 타입 나중에 추론하지말자
+
+//https://itchallenger.tistory.com/266

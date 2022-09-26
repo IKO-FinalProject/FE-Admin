@@ -55,19 +55,21 @@ function AddNotice() {
             type="button"
             width="w-[150px]"
             height="h-[40px]"
-            value="취소"
             bgColor="bg-[#D3D3D3]"
             textColor="text-white"
             borderColor="border-[#D3D3D3]"
-          />
+          >
+            취소
+          </Button>
           <Button
             type="submit"
             width="w-[150px]"
             height="h-[40px]"
-            value="등록"
             bgColor="bg-[#1B304A]"
             textColor="text-white"
-          />
+          >
+            등록
+          </Button>
         </div>
       </form>
     </ContentBox>

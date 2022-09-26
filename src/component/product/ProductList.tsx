@@ -1,5 +1,7 @@
 import React from 'react'
 
-function ProductList() {}
+function ProductList() {
+  return
+}
 
 export default ProductList
