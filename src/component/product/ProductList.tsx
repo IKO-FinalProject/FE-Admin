@@ -1,7 +1,7 @@
 import React from 'react'
 
 function ProductList() {
-  return
+  return <div>product list</div>
 }
 
 export default ProductList

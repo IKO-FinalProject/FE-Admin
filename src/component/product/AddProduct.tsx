@@ -4,39 +4,40 @@ import ImageUploader from '../ui/ImageUploaer'
 import SettingSwitcher from './SettingSwitcher'
 import PeriodSwitcher from './PeriodSwitcher'
 import Button from '../ui/Button'
+import Headliner from '../ui/HeadLiner'
 
 import { useState } from 'react'
 
 function AddProduct() {
   //메인정보상태
-  const [productTitle, setProductTitle] = useState(null)
-  const [price, setPrice] = useState(null)
-  const [discount, setDiscount] = useState(null)
-  const [diameter, setDiameter] = useState(null)
-  const [manufacturer, setManufacturer] = useState(null)
+  const [productTitle, setProductTitle] = useState('')
+  const [price, setPrice] = useState('')
+  const [discount, setDiscount] = useState('')
+  const [diameter, setDiameter] = useState('')
+  const [manufacturer, setManufacturer] = useState('')
   const [recommend, setRecommend] = useState(false)
   const [mainExposure, setMainExposure] = useState(false)
-  const [seriesValue, setSeriesValue] = useState(null)
+  const [seriesValue, setSeriesValue] = useState('')
   const [featureValue, setFeatureValue]: any = useState([])
 
   //메인정보핸들러
-  const productTitleValueChangeHandler = (e: any) => {
+  const productTitleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductTitle(e.target.value)
   }
 
-  const priceValueChangeHandler = (e: any) => {
+  const priceValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrice(e.target.value)
   }
 
-  const discountValueChangeHandler = (e: any) => {
+  const discountValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDiscount(e.target.value)
   }
 
-  const diameterValueChangeHandelr = (e: any) => {
+  const diameterValueChangeHandelr = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDiameter(e.target.value)
   }
 
-  const manufacturerValueChangeHandler = (e: any) => {
+  const manufacturerValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setManufacturer(e.target.value)
   }
 
@@ -48,15 +49,15 @@ function AddProduct() {
     setMainExposure(e.target.value)
   }
 
-  const seriesValueChangeHandler = (e: any) => {
+  const seriesValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSeriesValue(e.target.value)
   }
 
-  const featureValueChangeHandler = (checked: boolean, feature: any) => {
+  const featureValueChangeHandler = (checked: boolean, feature: string) => {
     if (checked) {
       setFeatureValue([...featureValue, feature])
     } else {
-      setFeatureValue(featureValue.filter((el: any) => el !== feature))
+      setFeatureValue(featureValue.filter((el: string) => el !== feature))
     }
   }
 
@@ -77,35 +78,35 @@ function AddProduct() {
   const [detailImages, setDetailImages] = useState([])
 
   //상세정보핸들러
-  const graphicDiameterValueChangeHandler = (e: any) => {
+  const graphicDiameterValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGraphicDiameter(e.target.value)
   }
 
-  const basecurveValueChangeHandler = (e: any) => {
+  const basecurveValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBasecurve(e.target.value)
   }
 
-  const colorValueChangeHandler = (e: any) => {
+  const colorValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value)
   }
 
-  const colorCodeValueChangeHander = (e: any) => {
+  const colorCodeValueChangeHander = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColorCode(e.target.value)
   }
 
-  const detailPriceValueChangeHandler = (e: any) => {
+  const detailPriceValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDetailPrice(e.target.value)
   }
 
-  const materialValueChangeHandler = (e: any) => {
+  const materialValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMaterial(e.target.value)
   }
 
-  const moistureValueChangeHandler = (e: any) => {
+  const moistureValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMoisture(e.target.value)
   }
 
-  const productDetailStockValueChangeHandler = (e: any) => {
+  const productDetailStockValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductDetailStock(e.target.value)
   }
 
@@ -117,7 +118,7 @@ function AddProduct() {
     setDetailsExposure(e.target.value)
   }
 
-  const periodValueChangeHandler = (e: any) => {
+  const periodValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPeriod(e.target.value)
   }
 
@@ -170,22 +171,15 @@ function AddProduct() {
     setDetailImages([])
   }
 
-  const deleteOption = (index: any): any => {
-    setOptionList(optionList.filter((option: any, optionIndex: number) => optionIndex !== index))
+  const deleteOption = (index: number) => {
+    setOptionList(optionList.filter((option: object[], optionIndex: number) => optionIndex !== index))
   }
 
   return (
     <>
       <form>
         <ContentBox marginBottom="mb-[20px]" marginRight="mr-[20px]">
-          <div className="mb-5" style={{ borderBottom: '1px solid #C4C4C4' }}>
-            <h1
-              className="flex h-[30px] w-[110px] items-center justify-center  text-[.9rem] font-bold drop-shadow-2xl"
-              style={{ borderBottom: '3px solid #A4C8E1', textShadow: '0 3px #C4C4C4' }}
-            >
-              메인정보 입력
-            </h1>
-          </div>
+          <Headliner>메인정보 입력</Headliner>
           <div>
             <Input
               label="상품명"
@@ -289,14 +283,7 @@ function AddProduct() {
         </ContentBox>
 
         <ContentBox marginBottom="mb-[50px]" marginRight="mr-[20px]">
-          <div className="mb-5" style={{ borderBottom: '1px solid #C4C4C4' }}>
-            <h1
-              className="flex h-[30px] w-[110px] items-center justify-center  text-[.9rem] font-bold drop-shadow-2xl"
-              style={{ borderBottom: '3px solid #A4C8E1', textShadow: '0 3px #C4C4C4' }}
-            >
-              상세정보 입력
-            </h1>
-          </div>
+          <Headliner>상세정보 입력</Headliner>
           <div className="flex w-full justify-between">
             <Input
               label="그래픽직경"
@@ -465,7 +452,7 @@ function AddProduct() {
               height="h-[40px]"
               bgColor="bg-[#1B304A]"
               textColor="text-white"
-              marginLeft="ml-[2rem]"
+              marginLeft="ml-[10px]"
             >
               등록하기
             </Button>

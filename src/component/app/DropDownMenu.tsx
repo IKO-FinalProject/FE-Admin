@@ -1,9 +1,14 @@
 import { NavLink } from 'react-router-dom'
 
+type menuList = {
+  title: string
+  link: string
+}
+
 function DropDownMenu({ menuList }: any) {
   return (
     <ul className="mt-[10px] flex h-[145px] w-[185px] flex-col justify-around rounded-md bg-[#1B304A] p-[10px]">
-      {menuList.map((menu: { title: string; link: string }) => (
+      {menuList.map((menu: menuList) => (
         <NavLink
           className="ml-[10px] no-underline hover:text-[#71B7F9]"
           key={menu.title}

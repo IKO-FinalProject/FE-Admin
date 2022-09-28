@@ -1,3 +1,19 @@
+import { ChangeEvent } from 'react'
+
+type InputProps = {
+  label: string
+  placeholder?: string
+  type?: string
+  width?: string
+  name?: string
+  value?: string
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  id: string
+  labelHidden?: string
+  flexCol?: string
+  inputWidth?: string
+}
+
 const Input = ({
   label,
   placeholder,
@@ -10,7 +26,7 @@ const Input = ({
   labelHidden,
   flexCol,
   inputWidth
-}: any) => {
+}: InputProps) => {
   return (
     <div className={`my-4 flex ${flexCol} ${width} items-center justify-center`}>
       <label className={` ${labelHidden} mr-[15px] w-[100px]`} htmlFor={`${id}`}>
@@ -31,9 +47,5 @@ const Input = ({
 }
 
 export default Input
-
-//인풋라벨, 인풋, 인풋 에러 이렇게 나누자
-
-//절대로!!!!!!! 타입 나중에 추론하지말자
 
 //https://itchallenger.tistory.com/266

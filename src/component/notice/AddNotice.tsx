@@ -3,33 +3,27 @@ import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
 import QuillEditor from './QuillEditor'
 import Button from '../ui/Button'
+import Headliner from '../ui/HeadLiner'
 
 function AddNotice() {
-  const [titleValue, setTitleValue] = useState(null)
+  const [titleValue, setTitleValue] = useState('')
   const [htmlContent, setHtmlContent] = useState('')
   const quillRef = useRef()
 
-  const titleInputHandler = (e: any) => {
+  const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(e.target.value)
   }
 
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
-      <div className="mb-5" style={{ borderBottom: '1px solid #C4C4C4' }}>
-        <h1
-          className="flex h-[30px] w-[100px] items-center justify-center  text-[.9rem] font-bold drop-shadow-2xl"
-          style={{ borderBottom: '3px solid #A4C8E1', textShadow: '0 3px #C4C4C4' }}
-        >
-          공지사항 작성
-        </h1>
-      </div>
+      <Headliner>공지사항 작성</Headliner>
       <form>
         <label className="hidden" htmlFor="noticeCategory">
           카테고리선택
         </label>
         <select
           id="noticeCategory"
-          className="select select-bordered select-sm w-[190px] border-[.5px] border-[#D9D9D9] text-[.7rem]"
+          className=" h-[25px] w-[140px] rounded-lg border-[#C4C4C4] text-[#C4C4C4]"
         >
           <option value="">필독 공지사항</option>
           <option value="">배송 관련</option>
@@ -46,11 +40,11 @@ function AddNotice() {
           id="noticeTitle"
           label="noticeTitle"
           onChange={titleInputHandler}
-          width="w-full"
+          inputWidth="w-full"
         />
         <QuillEditor quillRef={quillRef} htmlContent={htmlContent} setHtmlContent={setHtmlContent} />
 
-        <div className="mt-[2rem] mb-[5rem] flex justify-between">
+        <div className="mt-[2rem] mb-[5rem] flex justify-center">
           <Button
             type="button"
             width="w-[150px]"
@@ -67,6 +61,7 @@ function AddNotice() {
             height="h-[40px]"
             bgColor="bg-[#1B304A]"
             textColor="text-white"
+            marginLeft="ml-[10px]"
           >
             등록
           </Button>
