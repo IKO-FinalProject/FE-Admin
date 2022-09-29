@@ -4,13 +4,13 @@ import { useEffect } from 'react'
 import MainWrapper from './component/layout/MainWrapper'
 import Login from './component/app/Login'
 import MainPage from './component/app/MainPage'
-import ProductList from './component/product/ProductList'
-import AddProduct from './component/product/AddProduct'
-import OrderList from './component/order/OrderList'
-import NoticeList from './component/notice/NoticeList'
-import AddNotice from './component/notice/AddNotice'
-import EventList from './component/event/EventList'
-import AddEvent from './component/event/AddEvent'
+import ProductListPage from './component/product/ProductListPage'
+import AddProductPage from './component/product/AddProductPage'
+import OrderListPage from './component/order/OrderListPage'
+import NoticeListPage from './component/notice/NoticeListPage'
+import AddNoticePage from './component/notice/AddNoticePage'
+import EventListPage from './component/event/EventListPage'
+import AddEventPage from './component/event/AddEventPage'
 
 const Router = () => {
   function ScrollToTop() {
@@ -31,13 +31,13 @@ const Router = () => {
           <Route path="/login" element={<Login />} />
           <Route element={<MainWrapper />}>
             <Route path="/" element={<MainPage />} />
-            <Route path="/productlist" element={<ProductList />} />
-            <Route path="/addproduct" element={<AddProduct />} />
-            <Route path="/orderlist" element={<OrderList />} />
-            <Route path="/noticelist" element={<NoticeList />} />
-            <Route path="/addnotice" element={<AddNotice />} />
-            <Route path="/eventlist" element={<EventList />} />
-            <Route path="/addevent" element={<AddEvent />} />
+            <Route path="/productlist" element={<ProductListPage />} />
+            <Route path="/addproduct" element={<AddProductPage />} />
+            <Route path="/orderlist" element={<OrderListPage />} />
+            <Route path="/noticelist" element={<NoticeListPage />} />
+            <Route path="/addnotice" element={<AddNoticePage />} />
+            <Route path="/eventlist" element={<EventListPage />} />
+            <Route path="/addevent" element={<AddEventPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

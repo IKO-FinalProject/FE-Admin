@@ -12,9 +12,9 @@ const ImageUploader = ({ value, onChange }: any) => {
           <button type="button" onClick={onImageRemoveAll}>
             모두삭제
           </button>
-          <div className="mt-[1rem] flex w-full">
+          <ul className="mt-[1rem] flex w-full">
             {imageList.map((image, index) => (
-              <div key={index} className="image-item mr-[1rem]">
+              <li key={index} className="image-item mr-[1rem]">
                 <img src={image['data_url']} alt="" width="100" />
                 <div className="image-item__btn-wrapper">
                   <button type="button" className="mr-[1rem]" onClick={() => onImageUpdate(index)}>
@@ -24,9 +24,9 @@ const ImageUploader = ({ value, onChange }: any) => {
                     삭제
                   </button>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
     </ImageUploading>

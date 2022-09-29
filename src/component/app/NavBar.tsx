@@ -53,11 +53,11 @@ function NavBar() {
               noticeMenu: false
             })
           }}
-          className={`mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[17px] ${
+          className={`mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[15px] ${
             dropDownValue.saleMenu ? 'text-[#1B304A]' : 'text-[#C4C4C4]'
           } relative no-underline hover:text-[#1B304A]`}
         >
-          <FiShoppingBag className="mb-[2px] text-[25px]" />
+          <FiShoppingBag className="mb-[2px] text-[22px]" />
           <span className=" absolute left-[40px]">판매관리</span>
           <span className="absolute right-0">
             {dropDownValue.saleMenu ? <MdArrowDropUp /> : <MdArrowDropDown />}
@@ -83,11 +83,11 @@ function NavBar() {
               noticeMenu: false
             })
           }}
-          className={`mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[17px] ${
+          className={`mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[15px] ${
             dropDownValue.orderMenu ? 'text-[#1B304A]' : 'text-[#C4C4C4]'
           }  relative no-underline hover:text-[#1B304A]`}
         >
-          <FiShoppingCart className=" mb-[2px] text-[25px]" />{' '}
+          <FiShoppingCart className=" mb-[2px] text-[22px]" />
           <span className="absolute left-[40px]">주문관리</span>
           <span className="absolute right-0">
             {dropDownValue.orderMenu ? <MdArrowDropUp /> : <MdArrowDropDown />}
@@ -105,18 +105,18 @@ function NavBar() {
         )}
 
         <div
-          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[17px] text-[#C4C4C4]  no-underline hover:text-[#1B304A]`}
+          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[15px] text-[#C4C4C4]  no-underline hover:text-[#1B304A]`}
         >
-          <FiMail className=" mb-[2px] text-[25px]" />
+          <FiMail className=" mb-[2px] text-[22px]" />
           <span className="absolute left-[40px]">문의/리뷰 관리</span>
           <span className="absolute right-0">
             <MdArrowDropDown />
           </span>
         </div>
         <div
-          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[17px] text-[#C4C4C4]  no-underline hover:text-[#1B304A]`}
+          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[15px] text-[#C4C4C4]  no-underline hover:text-[#1B304A]`}
         >
-          <BsFileBarGraph className=" mb-[2px] text-[25px]" />{' '}
+          <BsFileBarGraph className=" mb-[2px] text-[22px]" />
           <span className="absolute left-[40px]">통계</span>
           <span className="absolute right-0">
             <MdArrowDropDown />
@@ -131,11 +131,11 @@ function NavBar() {
               noticeMenu: false
             })
           }}
-          className={` relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[17px] ${
+          className={` relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[15px] ${
             dropDownValue.eventMenu ? 'text-[#1B304A]' : 'text-[#C4C4C4]'
           }  no-underline hover:text-[#1B304A]`}
         >
-          <FiGift className=" mb-[2px] text-[25px]" />
+          <FiGift className=" mb-[2px] text-[22px]" />
           <span className="absolute left-[40px]">이벤트 관리</span>
           <span className="absolute right-0">
             {dropDownValue.eventMenu ? <MdArrowDropUp /> : <MdArrowDropDown />}
@@ -160,11 +160,11 @@ function NavBar() {
               noticeMenu: !dropDownValue.noticeMenu
             })
           }}
-          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[17px] ${
+          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center justify-between text-[15px] ${
             dropDownValue.noticeMenu ? 'text-[#1B304A]' : 'text-[#C4C4C4]'
           }  no-underline hover:text-[#1B304A]`}
         >
-          <RiCalendarCheckLine className=" mb-[2px] text-[25px]" />
+          <RiCalendarCheckLine className=" mb-[2px] text-[22px]" />
           <span className="absolute left-[40px]">공지사항 관리</span>
           <span className="absolute right-0">
             {dropDownValue.noticeMenu ? <MdArrowDropUp /> : <MdArrowDropDown />}
@@ -182,14 +182,14 @@ function NavBar() {
         )}
         <span className="mt-[120px] w-[182px] bg-[#C4C4C4] p-[1px]" />
         <div
-          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center text-[17px] text-[#C4C4C4]  no-underline hover:text-[#1B304A]`}
+          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center text-[15px] text-[#C4C4C4]  no-underline hover:text-[#1B304A]`}
         >
-          <FiSettings className=" mb-[2px] text-[25px]" /> <span className="absolute left-[40px]">통계</span>
+          <FiSettings className=" mb-[2px] text-[22px]" /> <span className="absolute left-[40px]">통계</span>
         </div>
         <div
-          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center text-[17px] text-[#C4C4C4]  no-underline hover:text-[red]`}
+          className={`relative mt-12 ml-[10px] flex w-[185px] cursor-pointer items-center text-[15px] text-[#C4C4C4]  no-underline hover:text-[red]`}
         >
-          <TbLogout className=" mb-[2px] text-[25px]" />{' '}
+          <TbLogout className=" mb-[2px] text-[22px]" />
           <span className="absolute left-[40px]">로그아웃</span>
         </div>
       </div>

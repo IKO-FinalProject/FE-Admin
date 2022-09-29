@@ -4,8 +4,9 @@ import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
 import { useState } from 'react'
 import ImageUploader from '../ui/ImageUploaer'
+import { useNavigate } from 'react-router-dom'
 
-function AddEvent() {
+function AddEventPage() {
   const [titleValue, setTitleValue] = useState('')
   const [contentValue, setContentValue] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -23,7 +24,6 @@ function AddEvent() {
 
   const startDateValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStartDate(e.target.value)
-    console.log(e.target.value)
   }
 
   const endDateValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,10 +42,30 @@ function AddEvent() {
     formData.append('image', imagelist)
   }
 
+  const formSubmitHandler = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (
+      titleValue.length === 0 ||
+      contentValue.length === 0 ||
+      startDate.length === 0 ||
+      endDate.length === 0 ||
+      mainImages.length === 0 ||
+      detailImages.length === 0
+    ) {
+      alert('모든 값을 입력하세요!')
+    }
+  }
+
+  const navigate = useNavigate()
+
+  const cancelClick = () => {
+    navigate('/eventlist')
+  }
+
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
       <Headliner>이벤트 등록</Headliner>
-      <form>
+      <form onSubmit={formSubmitHandler}>
         <Input
           type="text"
           labelHidden="hidden"
@@ -115,6 +135,7 @@ function AddEvent() {
             bgColor="bg-[#D3D3D3]"
             textColor="text-white"
             borderColor="border-[#D3D3D3]"
+            onClick={cancelClick}
           >
             취소
           </Button>
@@ -134,4 +155,4 @@ function AddEvent() {
   )
 }
 
-export default AddEvent
+export default AddEventPage
