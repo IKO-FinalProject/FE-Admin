@@ -9,7 +9,7 @@ const SettingSwitcher = ({ title, id, onChange, width }: any) => {
             name={title}
             id={id + 'True'}
             className="peer hidden"
-            value="true"
+            value={1}
             onChange={onChange}
           />
           <label
@@ -25,7 +25,7 @@ const SettingSwitcher = ({ title, id, onChange, width }: any) => {
             name={title}
             id={id + 'False'}
             className="peer hidden"
-            value="false"
+            value={0}
             defaultChecked
             onChange={onChange}
           />

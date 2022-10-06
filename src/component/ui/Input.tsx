@@ -6,7 +6,7 @@ type InputProps = {
   type?: string
   width?: string
   name?: string
-  value?: string
+  value?: string | number
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   id: string
   labelHidden?: string

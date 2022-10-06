@@ -5,28 +5,54 @@ import ImageUploader from '../ui/ImageUploaer'
 
 import { useState, useEffect } from 'react'
 
-function DetailInfoForm({ optionListHandler }: any) {
-  const [graphicDiameter, setGraphicDiameter] = useState('')
-  const [basecurve, setBasecurve] = useState('')
+type DetailInfoFormValue = {
+  graphicDiameter: number
+  basecurve: number
+  color: string
+  colorCode: string
+  material: string
+  detailPrice: number
+  moisture: number
+  productDetailsStock: number
+  isSale: number
+  detailsExposure: number
+  period: number
+  imageUrl: string[]
+  explanationImageUrl: string[]
+  degree: number[]
+}
+
+type Props = {
+  optionListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
+  allImageDataListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
+}
+
+function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
+  const [graphicDiameter, setGraphicDiameter] = useState(0)
+  const [basecurve, setBasecurve] = useState(0)
   const [color, setColor] = useState('')
   const [colorCode, setColorCode] = useState('')
   const [material, setMaterial] = useState('')
-  const [detailPrice, setDetailPrice] = useState('')
-  const [moisture, setMoisture] = useState('')
-  const [productDetailStock, setProductDetailStock] = useState('')
+  const [detailsPrice, setDetailsPrice] = useState(0)
+  const [moisture, setMoisture] = useState(0)
+  const [productDetailsStock, setProductDetailsStock] = useState(0)
 
-  const [isSale, setIsSale] = useState(false)
-  const [detailsExposure, setDetailsExposure] = useState(false)
-  const [period, setPeriod] = useState('먼슬리')
-  const [mainImages, setMainImages] = useState([])
-  const [detailImages, setDetailImages] = useState([])
+  const [isSale, setIsSale] = useState(0)
+  const [detailsExposure, setDetailsExposure] = useState(0)
+  const [period, setPeriod] = useState(30)
+  const [imageList, setImageList] = useState([])
+  const [imageUrlList, setImageUrlList] = useState([])
+  const [imageDataList, setImageDataList] = useState([])
+  const [explanationImageList, setExplanationImageList] = useState([])
+  const [explanationImageUrlList, setExplanationImageUrlList] = useState([])
+  const [explanationImageDataList, setExplanationImageDataList] = useState([])
 
   const graphicDiameterValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGraphicDiameter(e.target.value)
+    setGraphicDiameter(Number(e.target.value))
   }
 
   const basecurveValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBasecurve(e.target.value)
+    setBasecurve(Number(e.target.value))
   }
 
   const colorValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +64,7 @@ function DetailInfoForm({ optionListHandler }: any) {
   }
 
   const detailPriceValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetailPrice(e.target.value)
+    setDetailsPrice(Number(e.target.value))
   }
 
   const materialValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,50 +72,63 @@ function DetailInfoForm({ optionListHandler }: any) {
   }
 
   const moistureValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMoisture(e.target.value)
+    setMoisture(Number(e.target.value))
   }
 
   const productDetailStockValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductDetailStock(e.target.value)
+    setProductDetailsStock(Number(e.target.value))
   }
 
-  const isSaleValueChangeHandler = (e: any) => {
-    setIsSale(e.target.value)
+  const isSaleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSale(Number(e.target.value))
   }
 
-  const detailsExposureValueChangeHandler = (e: any) => {
-    setDetailsExposure(e.target.value)
+  const detailsExposureValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDetailsExposure(Number(e.target.value))
   }
 
   const periodValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriod(e.target.value)
+    setPeriod(Number(e.target.value))
   }
 
   const mainImagesChangeHandler = (imagelist: any) => {
-    setMainImages(imagelist)
-    const formData = new FormData()
-    formData.append('image', imagelist)
+    setImageList(imagelist)
+    const imageUrl: any = []
+    const imageData: any = []
+    imagelist.map((image: any) => {
+      imageUrl.push(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image.file.name}`)
+      imageData.push(image.file)
+    })
+    setImageUrlList(imageUrl)
+    setImageDataList(imageData)
   }
 
   const detailImagesChangeHandler = (imagelist: any) => {
-    setDetailImages(imagelist)
-    const formData = new FormData()
-    formData.append('image', imagelist)
+    setExplanationImageList(imagelist)
+    const imgUrl: any = []
+    const imageData: any = []
+    imagelist.map((image: any) => {
+      imgUrl.push(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image.file.name}`)
+      imageData.push(image.file)
+    })
+    setExplanationImageUrlList(imgUrl)
+    setExplanationImageDataList(imageData)
   }
   const [optionList, setOptionList]: any = useState([])
+  const [allImageDataList, setAllImageDataList]: any = useState([])
 
   const addOption = () => {
     if (
-      graphicDiameter.length === 0 ||
-      basecurve.length === 0 ||
+      graphicDiameter === 0 ||
+      basecurve === 0 ||
       color.length === 0 ||
       colorCode.length === 0 ||
       material.length === 0 ||
-      detailPrice.length === 0 ||
-      moisture.length === 0 ||
-      productDetailStock.length === 0 ||
-      mainImages.length === 0 ||
-      detailImages.length === 0
+      detailsPrice === 0 ||
+      moisture === 0 ||
+      productDetailsStock === 0 ||
+      imageList.length === 0 ||
+      explanationImageList.length === 0
     ) {
       alert('모든 옵션의 값을 입력하세요!')
       return
@@ -103,35 +142,49 @@ function DetailInfoForm({ optionListHandler }: any) {
         color,
         colorCode,
         material,
-        detailPrice,
+        detailsPrice,
         moisture,
-        productDetailStock,
+        productDetailsStock,
         isSale,
         detailsExposure,
         period,
-        mainImages,
-        detailImages
+        imageUrl: imageUrlList,
+        explanationImageUrl: explanationImageUrlList,
+        degree: [
+          0, -0.5, -1, -1.25, -1.5, -1.75, -2.0, -2.25, -2.5, -2.75, -3.0, -3.25, -3.5, -3.75, -4.0, -4.25,
+          -4.5, -4.75, -5.0, -5.5, -6.0, -6.5, -7.0, -7.5, -8.0
+        ]
       }
     ])
-    setGraphicDiameter('')
-    setBasecurve('')
+
+    setAllImageDataList([...allImageDataList, { imageData: [...imageDataList, ...explanationImageDataList] }])
+
+    setGraphicDiameter(0)
+    setBasecurve(0)
     setColor('')
     setColorCode('')
     setMaterial('')
-    setDetailPrice('')
-    setMoisture('')
-    setProductDetailStock('')
-    setMainImages([])
-    setDetailImages([])
+    setDetailsPrice(0)
+    setMoisture(0)
+    setProductDetailsStock(0)
+    setImageList([])
+    setExplanationImageList([])
   }
 
   const deleteOption = (index: number) => {
     setOptionList(optionList.filter((option: object[], optionIndex: number) => optionIndex !== index))
+    setAllImageDataList(
+      allImageDataList.filter((option: object[], optionIndex: number) => optionIndex !== index)
+    )
   }
 
   useEffect(() => {
     optionListHandler(optionList)
   }, [optionList])
+
+  useEffect(() => {
+    allImageDataListHandler(allImageDataList)
+  }, [allImageDataList])
 
   return (
     <>
@@ -143,6 +196,7 @@ function DetailInfoForm({ optionListHandler }: any) {
           inputWidth="w-[50%]"
           placeholder="입력하세요."
           value={graphicDiameter}
+          type="number"
           onChange={graphicDiameterValueChangeHandler}
         />
         <Input
@@ -191,7 +245,7 @@ function DetailInfoForm({ optionListHandler }: any) {
           width="w-[50%]"
           inputWidth="w-[50%]"
           placeholder="입력하세요."
-          value={detailPrice}
+          value={detailsPrice}
           onChange={detailPriceValueChangeHandler}
         />
       </div>
@@ -211,7 +265,7 @@ function DetailInfoForm({ optionListHandler }: any) {
           width="w-[50%]"
           inputWidth="w-[50%]"
           placeholder="입력하세요."
-          value={productDetailStock}
+          value={productDetailsStock}
           onChange={productDetailStockValueChangeHandler}
         />
       </div>
@@ -227,8 +281,9 @@ function DetailInfoForm({ optionListHandler }: any) {
       <PeriodSwitcher onChange={periodValueChangeHandler} />
       <div>
         <p className=" mb-[1rem] w-[120px]  text-[#1B304A]">&#183; 상품 이미지 첨부</p>
+        <p className="mb-[1rem] ml-[1rem] text-sm text-[red] ">띄어쓰기가 있는 파일명을 사용하지 마세요</p>
         <p className="mb-[1rem] ml-[1rem]  w-[120px]  text-sm text-[#1B304A]">&#183; 대표이미지</p>
-        <ImageUploader value={mainImages} onChange={mainImagesChangeHandler} />
+        <ImageUploader value={imageList} onChange={mainImagesChangeHandler} />
         <div className="mb-[1rem] ml-[1rem] text-sm text-[#DADADA]">
           <p>&#183; 권장크기 640x640px</p>
           <p>&#183; 메인페이지 및 상세페이지에 업로드 되는 대표 이미지 설정입니다.</p>
@@ -236,12 +291,13 @@ function DetailInfoForm({ optionListHandler }: any) {
         <p className="mb-[1rem] ml-[1rem] flex w-[120px] items-center text-sm text-[#1B304A]">
           &#183; 상세이미지
         </p>
-        <ImageUploader value={detailImages} onChange={detailImagesChangeHandler} />
+        <ImageUploader value={explanationImageList} onChange={detailImagesChangeHandler} />
         <div className="mb-[1rem] ml-[1rem] text-sm text-[#DADADA]">
           <p>&#183; 가로 860px</p>
           <p>&#183; 상세페이지에 업로드 되는 상품설명 이미지 설정입니다.</p>
         </div>
       </div>
+
       <p className="flex justify-center">
         <button
           type="button"

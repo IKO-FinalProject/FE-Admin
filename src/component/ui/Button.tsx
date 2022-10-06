@@ -10,6 +10,8 @@ type ButtonProps = {
   borderColor?: string
   marginLeft?: string
   onClick?: () => void
+  margin?: string
+  display?: string
 }
 
 const Button = ({
@@ -21,11 +23,13 @@ const Button = ({
   bgColor,
   textColor,
   borderColor,
-  marginLeft
+  marginLeft,
+  margin,
+  display
 }: ButtonProps) => {
   return (
     <button
-      className={`cursor-pointer ${textColor} ${marginLeft} rounded-md ${borderColor} ${height} ${width}  ${bgColor} flex items-center justify-center`}
+      className={`${margin} ${display} cursor-pointer ${textColor} ${marginLeft} rounded-md ${borderColor} ${height} ${width}  ${bgColor} flex items-center justify-center`}
       type={type}
       onClick={onClick}
     >

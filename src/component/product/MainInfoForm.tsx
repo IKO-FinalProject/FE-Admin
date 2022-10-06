@@ -2,82 +2,92 @@ import Input from '../ui/Input'
 import SettingSwitcher from './SettingSwitcher'
 import { useState, useEffect } from 'react'
 
-function MainInfoForm({ mainInformHandler }: any) {
+export type MainInfoFormValue = {
+  productName: string
+  price: number
+  discount: number
+  diameter: number
+  manufacturer: string
+  recommend: number
+  exposure: number
+  series: string
+  feature: string[]
+}
+
+type Props = {
+  mainInformHandler: React.Dispatch<React.SetStateAction<MainInfoFormValue>>
+}
+
+function MainInfoForm({ mainInformHandler }: Props) {
   //메인정보상태
-  const [productTitle, setProductTitle] = useState('')
-  const [price, setPrice] = useState('')
-  const [discount, setDiscount] = useState('')
-  const [diameter, setDiameter] = useState('')
+  const [productName, setProductName] = useState<MainInfoFormValue['productName']>('')
+  const [price, setPrice] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [diameter, setDiameter] = useState(0)
   const [manufacturer, setManufacturer] = useState('')
-  const [recommend, setRecommend] = useState(false)
-  const [mainExposure, setMainExposure] = useState(false)
-  const [seriesValue, setSeriesValue] = useState('')
-  const [featureValue, setFeatureValue]: any = useState([])
+  const [recommend, setRecommend] = useState(0)
+  const [exposure, setExposure] = useState(0)
+  const [series, setSeries] = useState('')
+  const [feature, setFeature] = useState<MainInfoFormValue['feature']>([])
 
   //메인정보핸들러
   const productTitleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductTitle(e.target.value)
+    // mainInformHandler(prev => ({
+    //   ...prev,
+    //   productTitle: e.target.value,
+    // }))
+    setProductName(e.target.value)
   }
 
   const priceValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPrice(e.target.value)
+    setPrice(Number(e.target.value))
   }
 
   const discountValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDiscount(e.target.value)
+    setDiscount(Number(e.target.value))
   }
 
   const diameterValueChangeHandelr = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDiameter(e.target.value)
+    setDiameter(Number(e.target.value))
   }
 
   const manufacturerValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setManufacturer(e.target.value)
   }
 
-  const recommendValueChangeHandler = (e: any) => {
-    setRecommend(e.target.value)
+  const recommendValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRecommend(Number(e.target.value))
   }
 
-  const mainExposureValueChangeHandler = (e: any) => {
-    setMainExposure(e.target.value)
+  const mainExposureValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExposure(Number(e.target.value))
   }
 
   const seriesValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSeriesValue(e.target.value)
+    setSeries(e.target.value)
   }
 
-  const featureValueChangeHandler = (checked: boolean, feature: string) => {
+  const featureValueChangeHandler = (checked: boolean, newFeature: string) => {
     if (checked) {
-      setFeatureValue([...featureValue, feature])
+      setFeature([...feature, newFeature])
     } else {
-      setFeatureValue(featureValue.filter((el: string) => el !== feature))
+      setFeature(feature.filter((el) => el !== newFeature))
     }
   }
 
   useEffect(() => {
     mainInformHandler({
-      productTitle,
+      productName,
       price,
       discount,
       diameter,
       manufacturer,
       recommend,
-      mainExposure,
-      seriesValue,
-      featureValue
+      exposure,
+      series,
+      feature
     })
-  }, [
-    productTitle,
-    price,
-    discount,
-    diameter,
-    manufacturer,
-    recommend,
-    mainExposure,
-    seriesValue,
-    featureValue
-  ])
+  }, [productName, price, discount, diameter, manufacturer, recommend, exposure, series, feature])
 
   const seriesList = ['에일린', '마리나', '샌드', '베티']
   const featureList = ['UV', '수분', '블루라이트', '실리콘']
@@ -90,33 +100,38 @@ function MainInfoForm({ mainInformHandler }: any) {
           id="product_title"
           inputWidth="w-full"
           placeholder="상품명을 입력하세요."
+          value={productName}
           onChange={productTitleValueChangeHandler}
         />
         <Input
           label="대표 가격"
           id="price"
           inputWidth="w-full"
-          placeholder="대표가격을 입력하세요."
+          value={price}
           onChange={priceValueChangeHandler}
+          type="number"
         />
         <Input
           label="할인률"
           id="discount"
           inputWidth="w-full"
-          placeholder="할인률을 입력하세요."
+          value={discount}
           onChange={discountValueChangeHandler}
+          type="number"
         />
         <Input
           label="직경"
           id="diameter"
           inputWidth="w-full"
-          placeholder="그래픽 직경을 입력하세요."
+          value={diameter}
+          type="number"
           onChange={diameterValueChangeHandelr}
         />
         <Input
           label="생산지"
           id="manufacturer"
           inputWidth="w-full"
+          value={manufacturer}
           placeholder="생산지를 입력하세요."
           onChange={manufacturerValueChangeHandler}
         />
@@ -160,25 +175,25 @@ function MainInfoForm({ mainInformHandler }: any) {
         </div>
 
         <div className="h-[250px] w-[45%] rounded-xl bg-[#F4F4F4] p-2">
-          {featureList.map((feature: any) => (
-            <div key={feature}>
+          {featureList.map((el) => (
+            <div key={el}>
               <input
                 type="checkbox"
                 name="feature"
-                id={feature}
+                id={el}
                 className="peer hidden"
-                value={feature}
+                value={el}
                 onChange={(e) => {
                   featureValueChangeHandler(e.target.checked, e.target.value)
                 }}
-                checked={featureValue.includes(feature) ? true : false}
+                checked={feature.includes(el) ? true : false}
               />
 
               <label
-                htmlFor={feature}
+                htmlFor={el}
                 className="block cursor-pointer select-none p-2 text-sm peer-checked:bg-[#D4D4D4] peer-checked:font-bold"
               >
-                &#8226; {feature}
+                &#8226; {el}
               </label>
             </div>
           ))}

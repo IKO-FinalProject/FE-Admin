@@ -9,7 +9,7 @@ const PeriodSwitcher = ({ onChange }: any) => {
             name="period"
             id="oneday"
             className="peer hidden"
-            value="원데이"
+            value={1}
             onChange={onChange}
           />
           <label
@@ -25,7 +25,7 @@ const PeriodSwitcher = ({ onChange }: any) => {
             name="period"
             id="monthly"
             className="peer hidden"
-            value="먼슬리"
+            value={30}
             defaultChecked
             onChange={onChange}
           />
