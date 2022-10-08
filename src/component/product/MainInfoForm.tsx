@@ -29,6 +29,8 @@ function MainInfoForm({ mainInformHandler }: Props) {
   const [exposure, setExposure] = useState(0)
   const [series, setSeries] = useState('')
   const [feature, setFeature] = useState<MainInfoFormValue['feature']>([])
+  const seriesList = ['에일린', '마리나', '샌드', '베티']
+  const featureList = ['UV', '수분', '블루라이트', '실리콘']
 
   //메인정보핸들러
   const productTitleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,9 +90,6 @@ function MainInfoForm({ mainInformHandler }: Props) {
       feature
     })
   }, [productName, price, discount, diameter, manufacturer, recommend, exposure, series, feature])
-
-  const seriesList = ['에일린', '마리나', '샌드', '베티']
-  const featureList = ['UV', '수분', '블루라이트', '실리콘']
 
   return (
     <>

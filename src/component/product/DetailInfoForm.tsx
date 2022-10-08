@@ -5,22 +5,7 @@ import ImageUploader from '../ui/ImageUploaer'
 
 import { useState, useEffect } from 'react'
 
-type DetailInfoFormValue = {
-  graphicDiameter: number
-  basecurve: number
-  color: string
-  colorCode: string
-  material: string
-  detailPrice: number
-  moisture: number
-  productDetailsStock: number
-  isSale: number
-  detailsExposure: number
-  period: number
-  imageUrl: string[]
-  explanationImageUrl: string[]
-  degree: number[]
-}
+import { DetailInfoFormValue } from './types'
 
 type Props = {
   optionListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
@@ -46,6 +31,9 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
   const [explanationImageList, setExplanationImageList] = useState([])
   const [explanationImageUrlList, setExplanationImageUrlList] = useState([])
   const [explanationImageDataList, setExplanationImageDataList] = useState([])
+
+  const [optionList, setOptionList]: any = useState([])
+  const [allImageDataList, setAllImageDataList]: any = useState([])
 
   const graphicDiameterValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGraphicDiameter(Number(e.target.value))
@@ -114,8 +102,6 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
     setExplanationImageUrlList(imgUrl)
     setExplanationImageDataList(imageData)
   }
-  const [optionList, setOptionList]: any = useState([])
-  const [allImageDataList, setAllImageDataList]: any = useState([])
 
   const addOption = () => {
     if (
@@ -185,6 +171,8 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
   useEffect(() => {
     allImageDataListHandler(allImageDataList)
   }, [allImageDataList])
+
+  console.log(allImageDataList)
 
   return (
     <>
@@ -283,7 +271,7 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
         <p className=" mb-[1rem] w-[120px]  text-[#1B304A]">&#183; 상품 이미지 첨부</p>
         <p className="mb-[1rem] ml-[1rem] text-sm text-[red] ">띄어쓰기가 있는 파일명을 사용하지 마세요</p>
         <p className="mb-[1rem] ml-[1rem]  w-[120px]  text-sm text-[#1B304A]">&#183; 대표이미지</p>
-        <ImageUploader value={imageList} onChange={mainImagesChangeHandler} />
+        <ImageUploader multiple={true} value={imageList} onChange={mainImagesChangeHandler} />
         <div className="mb-[1rem] ml-[1rem] text-sm text-[#DADADA]">
           <p>&#183; 권장크기 640x640px</p>
           <p>&#183; 메인페이지 및 상세페이지에 업로드 되는 대표 이미지 설정입니다.</p>
@@ -291,7 +279,7 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
         <p className="mb-[1rem] ml-[1rem] flex w-[120px] items-center text-sm text-[#1B304A]">
           &#183; 상세이미지
         </p>
-        <ImageUploader value={explanationImageList} onChange={detailImagesChangeHandler} />
+        <ImageUploader multiple={true} value={explanationImageList} onChange={detailImagesChangeHandler} />
         <div className="mb-[1rem] ml-[1rem] text-sm text-[#DADADA]">
           <p>&#183; 가로 860px</p>
           <p>&#183; 상세페이지에 업로드 되는 상품설명 이미지 설정입니다.</p>

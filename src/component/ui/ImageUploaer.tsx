@@ -1,8 +1,8 @@
 import ImageUploading from 'react-images-uploading'
 
-const ImageUploader = ({ value, onChange }: any) => {
+const ImageUploader = ({ value, onChange, multiple }: any) => {
   return (
-    <ImageUploading multiple value={value} onChange={onChange} dataURLKey="data_url">
+    <ImageUploading multiple={multiple} value={value} onChange={onChange} dataURLKey="data_url">
       {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove }) => (
         <div className="upload__image-wrapper ml-[1.5rem] mb-[1rem]">
           <button type="button" onClick={onImageUpload}>

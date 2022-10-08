@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import AWS from 'aws-sdk'
 
 import ContentBox from '../ui/ContentBox'
@@ -11,30 +11,51 @@ import { useNavigate } from 'react-router-dom'
 
 import type { MainInfoFormValue } from './MainInfoForm'
 
-async function addProduct(submitValue: any) {
-  const response = await fetch(`http://43.200.50.49:8080/admin/insertProduct`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(submitValue)
-  })
-  return response.json()
-}
-
-AWS.config.update({
-  accessKeyId: 'AKIAXQWCTWGR6O7FAMMV',
-  secretAccessKey: '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'
-})
-
-const myBucket = new AWS.S3({
-  params: { Bucket: 'iko-amazon-storage' },
-  region: 'ap-northeast-2'
-})
-
 function AddProductPage() {
+  const [optionList, setOptionList] = useState([])
+  const [allImageDataList, setAllImageDataList] = useState([])
+  const [awsData, setAwsData] = useState([])
+  const [mainInform, setMainInform] = useState<MainInfoFormValue>({
+    productName: '',
+    price: 0,
+    discount: 0,
+    diameter: 0,
+    manufacturer: '',
+    recommend: 0,
+    exposure: 0,
+    series: '',
+    feature: []
+  })
+
+  const navigate = useNavigate()
+
+  //ADDPRODUCT API
+  async function addProduct(submitValue: any) {
+    const response = await fetch(`http://43.200.50.49:8080/admin/insertProduct`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(submitValue)
+    })
+    return response.json()
+  }
   const { mutate } = useMutation((submitValue: any) => addProduct(submitValue))
+
+  //AWSAPI
   const [progress, setProgress] = useState(0)
+
+  const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
+
+  AWS.config.update({
+    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: VITE_SECRET_ACCESS_KEY
+  })
+
+  const myBucket = new AWS.S3({
+    params: { Bucket: 'iko-amazon-storage' },
+    region: 'ap-northeast-2'
+  })
 
   const uploadFile = (file: any) => {
     const params = {
@@ -60,29 +81,7 @@ function AddProductPage() {
     })
   }
 
-  const [mainInform, setMainInform] = useState<MainInfoFormValue>({
-    productName: '',
-    price: 0,
-    discount: 0,
-    diameter: 0,
-    manufacturer: '',
-    recommend: 0,
-    exposure: 0,
-    series: '',
-    feature: []
-  })
-  const [optionList, setOptionList] = useState([])
-  const [allImageDataList, setAllImageDataList] = useState([])
-  const [awsData, setAwsData] = useState([])
-
-  useEffect(() => {
-    const allImageData: any = []
-    allImageDataList.map((data: any) => {
-      allImageData.push(...data.imageData)
-    })
-    setAwsData(allImageData)
-  }, [allImageDataList])
-
+  //STATE HANDLER
   const mainInformHandler = (mainInform: any) => {
     setMainInform(mainInform)
   }
@@ -97,7 +96,6 @@ function AddProductPage() {
 
   const formSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault()
-
     if (
       mainInform.diameter === 0 ||
       mainInform.discount === 0 ||
@@ -120,7 +118,13 @@ function AddProductPage() {
     navigate('/productlist')
   }
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    const allImageData: any = []
+    allImageDataList.map((data: any) => {
+      allImageData.push(...data.imageData)
+    })
+    setAwsData(allImageData)
+  }, [allImageDataList])
 
   const cancelClick = () => {
     navigate('/productlist')

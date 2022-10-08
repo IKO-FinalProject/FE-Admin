@@ -1,62 +1,147 @@
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import AWS from 'aws-sdk'
+
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
 
 function AddEventPage() {
-  const [titleValue, setTitleValue] = useState('')
-  const [contentValue, setContentValue] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [mainImages, setMainImages] = useState([])
-  const [detailImages, setDetailImages] = useState([])
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [startTime, setStartTime] = useState('')
+  const [endTime, setEndTime] = useState('')
+  const [mainImage, setMainImage] = useState([])
+  const [mainImageUrl, setMainImageUrl] = useState('')
+  const [mainImageData, setMainImageData] = useState(null)
+  const [explainImage, setExplainImage] = useState([])
+  const [explainImageUrl, setExplainImageUrl] = useState('')
+  const [explainImageData, setExplainImageData] = useState(null)
 
-  const titleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleValue(e.target.value)
+  const [allImageDataList, setAllImageDataList] = useState([])
+
+  const navigate = useNavigate()
+
+  //ADDEVENT API
+
+  async function addEvent(submitValue: any) {
+    const response = await fetch(`http://43.200.50.49:8080/admin/insertEvent`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(submitValue)
+    })
+    return response.json()
   }
 
-  const contentValueChangeHadnler = (e: any) => {
-    setContentValue(e.target.value)
+  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue))
+
+  //AWS API
+
+  const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
+
+  AWS.config.update({
+    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: VITE_SECRET_ACCESS_KEY
+  })
+
+  const myBucket = new AWS.S3({
+    params: { Bucket: 'iko-amazon-storage' },
+    region: 'ap-northeast-2'
+  })
+
+  const [progress, setProgress] = useState(0)
+
+  const uploadFile = (file: any) => {
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: 'iko-amazon-storage',
+      Key: file.name
+    }
+
+    myBucket
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        setProgress(Math.round((evt.loaded / evt.total) * 100))
+      })
+      .send((err) => {
+        if (err) console.log(err)
+      })
   }
 
-  const startDateValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStartDate(e.target.value)
+  const awsUpload = () => {
+    allImageDataList.map((file) => {
+      uploadFile(file)
+    })
   }
 
-  const endDateValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEndDate(e.target.value)
+  //STATE HANDLER
+
+  const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value)
   }
 
-  const mainImagesChangeHandler = (imagelist: any) => {
-    setMainImages(imagelist)
-    const formData = new FormData()
-    formData.append('image', imagelist)
+  const descriptionChangeHadnler = (e: any) => {
+    setDescription(e.target.value)
   }
 
-  const detailImagesChangeHandler = (imagelist: any) => {
-    setDetailImages(imagelist)
-    const formData = new FormData()
-    formData.append('image', imagelist)
+  const startTimeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStartTime(e.target.value)
   }
+
+  const endTimeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEndTime(e.target.value)
+  }
+
+  const mainImageChangeHandler = (image: any) => {
+    setMainImage(image)
+    setMainImageUrl(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
+    setMainImageData(image[0].file)
+  }
+
+  const explainImageChangeHandler = (image: any) => {
+    setExplainImage(image)
+    setExplainImageUrl(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
+    setExplainImageData(image[0].file)
+  }
+
+  useEffect(() => {
+    const allImageData: any = [mainImageData, explainImageData]
+    setAllImageDataList(allImageData)
+  }, [mainImageData, explainImageData])
 
   const formSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault()
     if (
-      titleValue.length === 0 ||
-      contentValue.length === 0 ||
-      startDate.length === 0 ||
-      endDate.length === 0 ||
-      mainImages.length === 0 ||
-      detailImages.length === 0
+      title.length === 0 ||
+      description.length === 0 ||
+      startTime.length === 0 ||
+      endTime.length === 0 ||
+      mainImage.length === 0 ||
+      explainImage.length === 0
     ) {
       alert('모든 값을 입력하세요!')
+      return
     }
-  }
 
-  const navigate = useNavigate()
+    const submitValue = {
+      description,
+      endTime: `${endTime}T00:00:00.428Z`,
+      explainImageUrl,
+      mainImageUrl,
+      startTime: `${startTime}T00:00:00.428Z`,
+      title
+    }
+
+    awsUpload()
+    mutate(submitValue)
+    navigate('/eventlist')
+  }
 
   const cancelClick = () => {
     navigate('/eventlist')
@@ -73,8 +158,8 @@ function AddEventPage() {
           id="noticeTitle"
           label="noticeTitle"
           inputWidth="w-full"
-          value={titleValue}
-          onChange={titleValueChangeHandler}
+          value={title}
+          onChange={titleChangeHandler}
         />
 
         <textarea
@@ -83,8 +168,8 @@ function AddEventPage() {
           wrap="hard"
           className="h-[124px] w-full rounded-md border border-solid border-[#D9D9D9] pl-2 pt-2 placeholder-gray-400/60 focus:outline-1 focus:outline-[#ABC8DF]"
           placeholder="내용을 입력하세요"
-          value={contentValue}
-          onChange={contentValueChangeHadnler}
+          value={description}
+          onChange={descriptionChangeHadnler}
         />
         <div>
           <p className="mt-[20px] ml-[10px] font-bold text-[#1B304A]">&#183; 이벤트 기간 설정</p>
@@ -95,8 +180,8 @@ function AddEventPage() {
               id="startDate"
               labelHidden="hidden"
               label="startDate"
-              value={startDate}
-              onChange={startDateValueChangeHandler}
+              value={startTime}
+              onChange={startTimeChangeHandler}
             />
             <span className="mx-[20px] "> ~ </span>
             <Input
@@ -105,15 +190,15 @@ function AddEventPage() {
               id="endDate"
               labelHidden="hidden"
               label="endDate"
-              value={endDate}
-              onChange={endDateValueChangeHandler}
+              value={endTime}
+              onChange={endTimeChangeHandler}
             />
           </div>
         </div>
 
         <p className="mt-[20px] ml-[10px] mb-[20px] font-bold  text-[#1B304A]">&#183; 이벤트 이미지 첨부</p>
         <p className="mb-[1rem] ml-[1rem]  w-[120px]  text-sm text-[#1B304A]">&#183; 대표이미지</p>
-        <ImageUploader value={mainImages} onChange={mainImagesChangeHandler} />
+        <ImageUploader multiple={false} value={mainImage} onChange={mainImageChangeHandler} />
         <div className="mb-[1rem] ml-[1rem] text-sm text-[#DADADA]">
           <p>&#183; 권장크기 640x640px</p>
           <p>&#183; 메인페이지 및 상세페이지에 업로드 되는 대표 이미지 설정입니다.</p>
@@ -121,7 +206,7 @@ function AddEventPage() {
         <p className="mb-[1rem] ml-[1rem] flex w-[120px] items-center text-sm text-[#1B304A]">
           &#183; 상세이미지
         </p>
-        <ImageUploader value={detailImages} onChange={detailImagesChangeHandler} />
+        <ImageUploader multiple={false} value={explainImage} onChange={explainImageChangeHandler} />
         <div className="mb-[1rem] ml-[1rem] text-sm text-[#DADADA]">
           <p>&#183; 가로 860px</p>
           <p>&#183; 상세페이지에 업로드 되는 이벤트설명 이미지 설정입니다.</p>
