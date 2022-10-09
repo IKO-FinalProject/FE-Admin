@@ -10,6 +10,7 @@ import OrderListPage from './component/order/OrderListPage'
 import NoticeListPage from './component/notice/NoticeListPage'
 import AddNoticePage from './component/notice/AddNoticePage'
 import EventListPage from './component/event/EventListPage'
+import EventDetailPage from './component/event/EventDetailPage'
 import AddEventPage from './component/event/AddEventPage'
 
 const Router = () => {
@@ -37,6 +38,7 @@ const Router = () => {
             <Route path="/noticelist" element={<NoticeListPage />} />
             <Route path="/addnotice" element={<AddNoticePage />} />
             <Route path="/eventlist" element={<EventListPage />} />
+            <Route path="/eventlist/:eventId" element={<EventDetailPage />} />
             <Route path="/addevent" element={<AddEventPage />} />
           </Route>
         </Routes>

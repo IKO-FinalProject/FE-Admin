@@ -92,7 +92,7 @@ function ProductListPage() {
             return (
               <tr className=" w-full" key={item.productId}>
                 <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  <input className="" type="checkbox" name="xxx" value={item.productId} />
+                  <input className="" type="checkbox" name={item.productName} value={item.productId} />
                 </th>
                 <th className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   <Button
