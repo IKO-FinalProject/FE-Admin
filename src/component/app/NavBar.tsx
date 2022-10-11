@@ -146,7 +146,6 @@ function NavBar() {
             menuList={[
               { title: '이벤트 리스트', link: '/eventlist' },
               { title: '이벤트 작성', link: '/addevent' },
-              { title: '이벤트 상세', link: '/eventdetail' },
               { title: '이벤트 수정', link: '/' }
             ]}
           />

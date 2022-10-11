@@ -86,7 +86,7 @@ function AddEventPage() {
     setTitle(e.target.value)
   }
 
-  const descriptionChangeHadnler = (e: any) => {
+  const descriptionChangeHadnler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value)
   }
 

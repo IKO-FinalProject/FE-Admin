@@ -172,8 +172,6 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
     allImageDataListHandler(allImageDataList)
   }, [allImageDataList])
 
-  console.log(allImageDataList)
-
   return (
     <>
       <div className="flex w-full justify-between">
