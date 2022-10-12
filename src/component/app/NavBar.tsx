@@ -98,7 +98,6 @@ function NavBar() {
             menuList={[
               { title: '주문 리스트', link: '/orderlist' },
               { title: '주문 관리', link: '/' },
-              { title: '주문 상세', link: '/' },
               { title: '배송정보 관리', link: '/' }
             ]}
           />

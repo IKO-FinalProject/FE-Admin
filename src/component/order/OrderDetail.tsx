@@ -1,15 +1,15 @@
 import ContentBox from '../ui/ContentBox'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
+import Button from '../ui/Button'
 
 import { useQuery } from 'react-query'
 const { VITE_API } = import.meta.env
 
 function OrderDetailPage() {
   const location = useLocation()
+  const navigate = useNavigate()
   const mainOrderInfo = location.state
   const params = useParams()
-
-  console.log(location.state)
 
   async function getOrdersDetails() {
     const response = await fetch(`${VITE_API}/admin/searchOrderById?orderId=${params.orderId}`)
@@ -19,7 +19,9 @@ function OrderDetailPage() {
   const fallback: string[] = []
   const { data: orderDetail = fallback } = useQuery(['orderDetail'], getOrdersDetails)
 
-  console.log(orderDetail.data)
+  const cancelClick = () => {
+    navigate('/orderlist')
+  }
 
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
@@ -208,6 +210,86 @@ function OrderDetailPage() {
           </tr>
         </tbody>
       </table>
+
+      <h2 className="mt-[1.5rem] mb-[1rem] text-xl font-bold">배송지 정보</h2>
+      <table className="w-full">
+        <tbody>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              수취인명
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+              {mainOrderInfo.orderInfo.receiver}
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              전화번호1
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              {mainOrderInfo.orderInfo.receiverPhone}
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              전화번호2
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              배송지
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+              {mainOrderInfo.orderInfo.postCode}
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              배송메모
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+              {mainOrderInfo.orderInfo.shippingMessage}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 className="mt-[1.5rem] mb-[1rem] text-xl font-bold">주문 처리 이력</h2>
+      <table className="mb-[2rem] w-full">
+        <tbody>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              주문
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              결제완료
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="mb-[5rem] flex justify-center">
+        <Button
+          type="button"
+          width="w-[80px]"
+          height="h-[40px]"
+          bgColor="bg-white"
+          textColor="text-[black]"
+          borderColor="border-[#C2C9D1]"
+          display="block"
+          marginLeft="ml-[10px]"
+          onClick={cancelClick}
+        >
+          닫기
+        </Button>
+      </div>
     </ContentBox>
   )
 }
