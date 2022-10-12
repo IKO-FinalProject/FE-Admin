@@ -14,8 +14,10 @@ import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
 import DUMMY from './DUMMY'
 
+const { VITE_API } = import.meta.env
+
 async function getProducts() {
-  const response = await fetch('http://43.200.50.49:8080/product/product')
+  const response = await fetch(`${VITE_API}/admin/allProductInfo`)
   return response.json()
 }
 
@@ -26,6 +28,8 @@ function ProductListPage() {
   const { data: product = fallback } = useQuery(['productsList', currentPage], getProducts)
 
   const Dummy: itemType[] = DUMMY
+
+  console.log(product.data)
 
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
@@ -88,13 +92,13 @@ function ProductListPage() {
           </tr>
         </thead>
         <tbody>
-          {Dummy.map((item: itemType) => {
+          {product.data.map((item: itemType) => {
             return (
               <tr className=" w-full" key={item.productId}>
-                <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                <td className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   <input className="" type="checkbox" name={item.productName} value={item.productId} />
-                </th>
-                <th className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   <Button
                     type="button"
                     width="w-[50px]"
@@ -107,8 +111,8 @@ function ProductListPage() {
                   >
                     취소
                   </Button>
-                </th>
-                <th className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   <Button
                     type="button"
                     width="w-[50px]"
@@ -120,25 +124,25 @@ function ProductListPage() {
                   >
                     복사
                   </Button>
-                </th>
-                <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   {item.productId}
-                </th>
-                <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   {item.productName}
-                </th>
-                <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   {item.price}円
-                </th>
-                <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   {item.discount}%
-                </th>
-                <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   {item.diameter}mm
-                </th>
-                <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                </td>
+                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                   {item.manufacturer}
-                </th>
+                </td>
               </tr>
             )
           })}

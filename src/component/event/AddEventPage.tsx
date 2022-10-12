@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
 
+const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY, VITE_BUCKET_NAME, VITE_API } = import.meta.env
+
 function AddEventPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -28,7 +30,7 @@ function AddEventPage() {
   //ADDEVENT API
 
   async function addEvent(submitValue: any) {
-    const response = await fetch(`http://43.200.50.49:8080/admin/insertEvent`, {
+    const response = await fetch(`${VITE_API}/admin/insertEvent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -42,15 +44,13 @@ function AddEventPage() {
 
   //AWS API
 
-  const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
-
   AWS.config.update({
     accessKeyId: VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: VITE_SECRET_ACCESS_KEY
   })
 
   const myBucket = new AWS.S3({
-    params: { Bucket: 'iko-amazon-storage' },
+    params: { Bucket: VITE_BUCKET_NAME },
     region: 'ap-northeast-2'
   })
 
@@ -60,7 +60,7 @@ function AddEventPage() {
     const params = {
       ACL: 'public-read',
       Body: file,
-      Bucket: 'iko-amazon-storage',
+      Bucket: VITE_BUCKET_NAME,
       Key: file.name
     }
 
@@ -100,13 +100,13 @@ function AddEventPage() {
 
   const mainImageChangeHandler = (image: any) => {
     setMainImage(image)
-    setMainImageUrl(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
+    setMainImageUrl(`https://${VITE_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
     setMainImageData(image[0].file)
   }
 
   const explainImageChangeHandler = (image: any) => {
     setExplainImage(image)
-    setExplainImageUrl(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
+    setExplainImageUrl(`https://${VITE_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
     setExplainImageData(image[0].file)
   }
 

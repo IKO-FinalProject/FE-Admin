@@ -1,12 +1,23 @@
 import ContentBox from '../ui/ContentBox'
 import Headliner from '../ui/HeadLiner'
 import Button from '../ui/Button'
-import Dummy from './Dummy'
 import { useState } from 'react'
+import { useQuery } from 'react-query'
+import { Link } from 'react-router-dom'
+const { VITE_API } = import.meta.env
+
+async function getOrders() {
+  const response = await fetch(`${VITE_API}/admin/allOrderInfo`)
+  return response.json()
+}
 
 function OrderListPage() {
+  const [currentPage, setCurrentPage] = useState(1)
   const [checkItems, setCheckItems]: any = useState([])
 
+  const fallback: string[] = []
+  const { data: orderList = fallback } = useQuery(['orderList', currentPage], getOrders)
+  console.log(orderList)
   const checkboxHandler = (e: { target: { checked: any; value: any } }) => {
     if (e.target.checked) {
       setCheckItems([...checkItems, e.target.value])
@@ -14,8 +25,6 @@ function OrderListPage() {
       setCheckItems(checkItems.filter((el: any) => el !== e.target.value))
     }
   }
-
-  console.log(checkItems)
 
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
@@ -79,45 +88,48 @@ function OrderListPage() {
             </tr>
           </thead>
           <tbody>
-            {Dummy.map((order: any) => {
-              return (
-                <tr className=" w-full" key={order.orderInfo.orderId}>
-                  <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    <input
-                      className=""
-                      type="checkbox"
-                      name="orderList"
-                      value={order.orderInfo.orderId}
-                      onChange={checkboxHandler}
-                    />
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.orderInfo.orderId}
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.orderInfo.orderCreatedAt}
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.orderInfo.status}
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.productName[0]}
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.orderInfo.orderer}
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.orderInfo.receiver}
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.orderInfo.receiverPhone}
-                  </th>
-                  <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    {order.orderInfo.postCode}
-                  </th>
-                </tr>
-              )
-            })}
+            {orderList.data &&
+              orderList.data.map((order: any) => {
+                return (
+                  <tr className=" w-full" key={order.orderInfo.orderId}>
+                    <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      <input
+                        className=""
+                        type="checkbox"
+                        name="orderList"
+                        value={order.orderInfo.orderId}
+                        onChange={checkboxHandler}
+                      />
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      <Link to={`/orderlist/${order.orderInfo.orderId}`} state={order}>
+                        {order.orderInfo.orderId}
+                      </Link>
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.orderCreatedAt}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.status}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.productName}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.orderer}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.receiver}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.receiverPhone}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.postCode}
+                    </th>
+                  </tr>
+                )
+              })}
           </tbody>
         </table>
       </div>

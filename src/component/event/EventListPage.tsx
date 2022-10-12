@@ -7,8 +7,10 @@ import Button from '../ui/Button'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
+const { VITE_API } = import.meta.env
+
 async function getEvents() {
-  const response = await fetch('http://43.200.50.49:8080/event/main')
+  const response = await fetch(`${VITE_API}/event/main`)
   return response.json()
 }
 

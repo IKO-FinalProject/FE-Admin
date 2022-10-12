@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom'
 
 import type { MainInfoFormValue } from './MainInfoForm'
 
+const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY, VITE_BUCKET_NAME, VITE_API } = import.meta.env
+
 function AddProductPage() {
   const [optionList, setOptionList] = useState([])
   const [allImageDataList, setAllImageDataList] = useState([])
@@ -31,7 +33,7 @@ function AddProductPage() {
 
   //ADDPRODUCT API
   async function addProduct(submitValue: any) {
-    const response = await fetch(`http://43.200.50.49:8080/admin/insertProduct`, {
+    const response = await fetch(`${VITE_API}/admin/insertProduct`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -45,15 +47,13 @@ function AddProductPage() {
   //AWSAPI
   const [progress, setProgress] = useState(0)
 
-  const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY } = import.meta.env
-
   AWS.config.update({
     accessKeyId: VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: VITE_SECRET_ACCESS_KEY
   })
 
   const myBucket = new AWS.S3({
-    params: { Bucket: 'iko-amazon-storage' },
+    params: { Bucket: VITE_BUCKET_NAME },
     region: 'ap-northeast-2'
   })
 
@@ -61,7 +61,7 @@ function AddProductPage() {
     const params = {
       ACL: 'public-read',
       Body: file,
-      Bucket: 'iko-amazon-storage',
+      Bucket: VITE_BUCKET_NAME,
       Key: file.name
     }
 

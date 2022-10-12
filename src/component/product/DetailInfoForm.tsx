@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react'
 
 import { DetailInfoFormValue } from './types'
 
+const { VITE_BUCKET_NAME } = import.meta.env
+
 type Props = {
   optionListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
   allImageDataListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
@@ -84,7 +86,7 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
     const imageUrl: any = []
     const imageData: any = []
     imagelist.map((image: any) => {
-      imageUrl.push(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image.file.name}`)
+      imageUrl.push(`https://${VITE_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/${image.file.name}`)
       imageData.push(image.file)
     })
     setImageUrlList(imageUrl)
@@ -96,7 +98,7 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
     const imgUrl: any = []
     const imageData: any = []
     imagelist.map((image: any) => {
-      imgUrl.push(`https://iko-amazon-storage.s3.ap-northeast-2.amazonaws.com/${image.file.name}`)
+      imgUrl.push(`https://${VITE_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/${image.file.name}`)
       imageData.push(image.file)
     })
     setExplanationImageUrlList(imgUrl)
