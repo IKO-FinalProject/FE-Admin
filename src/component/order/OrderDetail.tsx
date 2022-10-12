@@ -1,6 +1,4 @@
 import ContentBox from '../ui/ContentBox'
-import Headliner from '../ui/HeadLiner'
-import { DummyDetail } from './Dummy'
 import { useLocation, useParams } from 'react-router-dom'
 
 import { useQuery } from 'react-query'
@@ -25,22 +23,25 @@ function OrderDetailPage() {
 
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
-      <Headliner>주문 상세정보</Headliner>
+      <h2 className="mt-[1.5rem] mb-[1rem] text-xl font-bold">주문 상세정보</h2>
       <table className="w-full">
         <tbody>
           <tr>
-            <td className="w-[20%] p-2" style={{ border: '1px solid #C2C9D1' }}>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
               상품주문번호
             </td>
-            <td className="p-2" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
               {mainOrderInfo.orderInfo.orderId}
             </td>
           </tr>
           <tr>
-            <td className="w-[20%] p-2" style={{ border: '1px solid #C2C9D1' }}>
+            <td
+              className="w-[20%] bg-[#DADADA] p-2 pl-[1rem] align-middle "
+              style={{ border: '1px solid #C2C9D1' }}
+            >
               상품정보
             </td>
-            <td colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+            <td className="p-2 align-middle" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
               <div>
                 {orderDetail.data &&
                   orderDetail.data.map((el: any) => {
@@ -65,16 +66,143 @@ function OrderDetailPage() {
             </td>
           </tr>
           <tr>
-            <td className="w-[20%] p-2" style={{ border: '1px solid #C2C9D1' }}>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
               상품주문상태
             </td>
-            <td className="w-[30%] p-2" style={{ border: '1px solid #C2C9D1' }}>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
               {mainOrderInfo.orderInfo.status}
             </td>
-            <td className="w-[20%] p-2" style={{ border: '1px solid #C2C9D1' }}>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
               클레임
             </td>
-            <td className="w-[30%] p-2" style={{ border: '1px solid #C2C9D1' }}>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              구매자명
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              {mainOrderInfo.orderInfo.orderer}
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              구매자 전화번호
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              {mainOrderInfo.orderInfo.phone}
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              총 상품금액
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+              {mainOrderInfo.orderInfo.totalPrice}円
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 className="mt-[1.5rem] mb-[1rem] text-xl font-bold">주문 상세정보</h2>
+      <table className="w-full">
+        <tbody>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              발송지연사유
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              당일발송여부
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              발송기한
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              예약구매여부
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              발송처리일
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              발주확인일
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              배송방법
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              택배
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              배송완료일
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              택배사
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              구매확정일
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              송장번호
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              배송상세상태
+            </td>
+            <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              오류송장등록사유
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
+              -
+            </td>
+          </tr>
+          <tr>
+            <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+              개인통관고유부호
+            </td>
+            <td className="p-2 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
               -
             </td>
           </tr>

@@ -92,60 +92,61 @@ function ProductListPage() {
           </tr>
         </thead>
         <tbody>
-          {product.data.map((item: itemType) => {
-            return (
-              <tr className=" w-full" key={item.productId}>
-                <td className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  <input className="" type="checkbox" name={item.productName} value={item.productId} />
-                </td>
-                <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  <Button
-                    type="button"
-                    width="w-[50px]"
-                    height="h-[30px]"
-                    bgColor="bg-white"
-                    textColor="text-[#C2C9D1]"
-                    borderColor="border-[#C2C9D1]"
-                    display="block"
-                    margin="m-auto"
-                  >
-                    취소
-                  </Button>
-                </td>
-                <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  <Button
-                    type="button"
-                    width="w-[50px]"
-                    height="h-[30px]"
-                    bgColor="bg-[#1B304A]"
-                    textColor="text-white"
-                    display="block"
-                    margin="m-auto"
-                  >
-                    복사
-                  </Button>
-                </td>
-                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  {item.productId}
-                </td>
-                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  {item.productName}
-                </td>
-                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  {item.price}円
-                </td>
-                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  {item.discount}%
-                </td>
-                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  {item.diameter}mm
-                </td>
-                <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                  {item.manufacturer}
-                </td>
-              </tr>
-            )
-          })}
+          {product.data &&
+            product.data.map((item: itemType) => {
+              return (
+                <tr className=" w-full" key={item.productId}>
+                  <td className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    <input className="" type="checkbox" name={item.productName} value={item.productId} />
+                  </td>
+                  <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    <Button
+                      type="button"
+                      width="w-[50px]"
+                      height="h-[30px]"
+                      bgColor="bg-white"
+                      textColor="text-[#C2C9D1]"
+                      borderColor="border-[#C2C9D1]"
+                      display="block"
+                      margin="m-auto"
+                    >
+                      취소
+                    </Button>
+                  </td>
+                  <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    <Button
+                      type="button"
+                      width="w-[50px]"
+                      height="h-[30px]"
+                      bgColor="bg-[#1B304A]"
+                      textColor="text-white"
+                      display="block"
+                      margin="m-auto"
+                    >
+                      복사
+                    </Button>
+                  </td>
+                  <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    {item.productId}
+                  </td>
+                  <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    {item.productName}
+                  </td>
+                  <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    {item.price}円
+                  </td>
+                  <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    {item.discount}%
+                  </td>
+                  <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    {item.diameter}mm
+                  </td>
+                  <td className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    {item.manufacturer}
+                  </td>
+                </tr>
+              )
+            })}
         </tbody>
       </table>
     </ContentBox>
