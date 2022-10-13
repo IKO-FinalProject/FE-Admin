@@ -5,9 +5,9 @@ function Header() {
   const navigate = useNavigate()
 
   return (
-    <div className="sticky top-0 z-10 flex h-[50px]  items-center bg-[#1B304A] text-white">
+    <div className="sticky top-0 z-10 flex h-[50px]  items-center bg-[#ABC8DF] text-white">
       <div
-        className="flex h-full w-[226px] cursor-pointer items-center justify-center bg-[#304F76] text-lg font-bold"
+        className="flex h-full w-[226px] cursor-pointer items-center justify-center bg-[#73A4CA] text-lg font-bold"
         onClick={() => {
           navigate('/')
         }}

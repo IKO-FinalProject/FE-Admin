@@ -29,8 +29,6 @@ function ProductListPage() {
 
   const Dummy: itemType[] = DUMMY
 
-  console.log(product.data)
-
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
       <Headliner>상품목록</Headliner>
