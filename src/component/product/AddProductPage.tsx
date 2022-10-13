@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
 
-import { myBucket } from '../ui/aws'
+// import { myBucket } from '../ui/aws'
 import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
@@ -45,31 +45,31 @@ function AddProductPage() {
   const { mutate } = useMutation((submitValue: any) => addProduct(submitValue))
 
   //AWSAPI
-  const [progress, setProgress] = useState(0)
+  // const [progress, setProgress] = useState(0)
 
-  const uploadFile = (file: any) => {
-    const params = {
-      ACL: 'public-read',
-      Body: file,
-      Bucket: VITE_BUCKET_NAME,
-      Key: file.name
-    }
+  // const uploadFile = (file: any) => {
+  //   const params = {
+  //     ACL: 'public-read',
+  //     Body: file,
+  //     Bucket: VITE_BUCKET_NAME,
+  //     Key: file.name
+  //   }
 
-    myBucket
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        setProgress(Math.round((evt.loaded / evt.total) * 100))
-      })
-      .send((err) => {
-        if (err) console.log(err)
-      })
-  }
+  //   myBucket
+  //     .putObject(params)
+  //     .on('httpUploadProgress', (evt) => {
+  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
+  //     })
+  //     .send((err) => {
+  //       if (err) console.log(err)
+  //     })
+  // }
 
-  const awsUpload = () => {
-    awsData.map((file) => {
-      uploadFile(file)
-    })
-  }
+  // const awsUpload = () => {
+  //   awsData.map((file) => {
+  //     uploadFile(file)
+  //   })
+  // }
 
   //STATE HANDLER
   const mainInformHandler = (mainInform: any) => {
@@ -103,7 +103,7 @@ function AddProductPage() {
       ...mainInform,
       productOptionSaveRequestList: optionList
     }
-    awsUpload()
+    // awsUpload()
     mutate(submitValue)
     navigate('/productlist')
   }
