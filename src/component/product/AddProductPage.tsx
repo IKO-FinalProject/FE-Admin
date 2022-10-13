@@ -1,5 +1,5 @@
 import { useMutation } from 'react-query'
-import ReactS3Client from 'react-aws-s3-typescript'
+import AWS from 'aws-sdk'
 
 import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
@@ -12,8 +12,6 @@ import { useNavigate } from 'react-router-dom'
 import type { MainInfoFormValue } from './MainInfoForm'
 
 const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY, VITE_BUCKET_NAME, VITE_API } = import.meta.env
-
-console.log(VITE_AWS_ACCESS_KEY_ID)
 
 function AddProductPage() {
   const [optionList, setOptionList] = useState([])
@@ -44,32 +42,37 @@ function AddProductPage() {
     })
     return response.json()
   }
-  const { mutate } = useMutation((submitValue: any) => addProduct(submitValue), {
-    onSuccess: () => {
-      navigate('/productlist')
-    }
-  })
+  const { mutate } = useMutation((submitValue: any) => addProduct(submitValue))
 
   //AWSAPI
   const [progress, setProgress] = useState(0)
 
-  const s3Config = {
-    bucketName: VITE_BUCKET_NAME,
-    region: 'ap-northeast-2',
+  AWS.config.update({
     accessKeyId: VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: VITE_SECRET_ACCESS_KEY
-  }
+  })
 
-  const uploadFile = async (file: any) => {
-    const s3 = new ReactS3Client(s3Config)
+  const myBucket = new AWS.S3({
+    params: { Bucket: VITE_BUCKET_NAME },
+    region: 'ap-northeast-2'
+  })
 
-    try {
-      const res = await s3.uploadFile(file)
-
-      console.log(res)
-    } catch (exception) {
-      console.log(exception)
+  const uploadFile = (file: any) => {
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: VITE_BUCKET_NAME,
+      Key: file.name
     }
+
+    myBucket
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        setProgress(Math.round((evt.loaded / evt.total) * 100))
+      })
+      .send((err) => {
+        if (err) console.log(err)
+      })
   }
 
   const awsUpload = () => {
@@ -112,6 +115,7 @@ function AddProductPage() {
     }
     awsUpload()
     mutate(submitValue)
+    navigate('/productlist')
   }
 
   useEffect(() => {

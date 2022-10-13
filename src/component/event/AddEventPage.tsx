@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import ReactS3Client from 'react-aws-s3-typescript'
+import AWS from 'aws-sdk'
 
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
@@ -41,34 +41,38 @@ function AddEventPage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue), {
-    onSuccess: () => {
-      navigate('/eventlist')
-    }
-  })
+  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue))
 
   //AWS API
 
-  const [progress, setProgress] = useState(0)
-
-  const s3Config = {
-    bucketName: VITE_BUCKET_NAME,
-    region: 'ap-northeast-2',
+  AWS.config.update({
     accessKeyId: VITE_AWS_ACCESS_KEY_ID,
     secretAccessKey: VITE_SECRET_ACCESS_KEY
-  }
+  })
 
-  const uploadFile = async (file: any) => {
-    const s3 = new ReactS3Client(s3Config)
+  const myBucket = new AWS.S3({
+    params: { Bucket: VITE_BUCKET_NAME },
+    region: 'ap-northeast-2'
+  })
 
-    try {
-      const res = await s3.uploadFile(file)
+  const [progress, setProgress] = useState(0)
 
-      console.log(res)
-    } catch (exception) {
-      console.log(exception)
-      console.log('123')
+  const uploadFile = (file: any) => {
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: VITE_BUCKET_NAME,
+      Key: file.name
     }
+
+    myBucket
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        setProgress(Math.round((evt.loaded / evt.total) * 100))
+      })
+      .send((err) => {
+        if (err) console.log(err)
+      })
   }
 
   const awsUpload = () => {
@@ -76,6 +80,7 @@ function AddEventPage() {
       uploadFile(file)
     })
   }
+
   //STATE HANDLER
 
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,7 +145,8 @@ function AddEventPage() {
     }
 
     awsUpload()
-    // mutate(submitValue)
+    mutate(submitValue)
+    navigate('/eventlist')
   }
 
   const cancelClick = () => {
