@@ -8,7 +8,7 @@ const { VITE_API } = import.meta.env
 function OrderDetailPage() {
   const location = useLocation()
   const navigate = useNavigate()
-  const mainOrderInfo = location.state
+  const mainOrderInfo: any = location.state
   const params = useParams()
 
   async function getOrdersDetails() {
@@ -51,7 +51,7 @@ function OrderDetailPage() {
                       <ul key={el.productId}>
                         <div className="mb-[.5rem] ml-[1rem]">{`- ${el.productName} / ${el.series} / ${el.diameter}`}</div>
                         <div className="mb-[1rem] ml-[2rem]">
-                          {el.detailsInfo.map((option, index: number) => {
+                          {el.detailsInfo.map((option: any, index: number) => {
                             return (
                               <li className="text-sm" key={option.productDetailsId}>{`옵션 ${index + 1}. ${
                                 option.color
