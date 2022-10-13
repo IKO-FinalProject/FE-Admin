@@ -96,7 +96,7 @@ function ProductListPage() {
             product.data.map((item: itemType) => {
               return (
                 <tr className=" w-full" key={item.productId}>
-                  <td className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                  <td className="p-2 align-middle" style={{ border: '1px solid #C2C9D1' }}>
                     <input className="" type="checkbox" name={item.productName} value={item.productId} />
                   </td>
                   <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
@@ -110,7 +110,7 @@ function ProductListPage() {
                       display="block"
                       margin="m-auto"
                     >
-                      취소
+                      수정
                     </Button>
                   </td>
                   <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>

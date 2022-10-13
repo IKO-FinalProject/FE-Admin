@@ -1,7 +1,9 @@
-const SettingSwitcher = ({ title, id, onChange, width }: any) => {
+const SettingSwitcher = ({ title, id, onChange, width, titleHidden, justifyCenter }: any) => {
   return (
-    <div className={`my-4 mb-[2rem] flex ${width} items-center justify-center`}>
-      <span className="mr-[15px] flex w-[100px] items-center text-sm text-[#1B304A]"> &#183; {title} </span>
+    <div className={`my-4 mb-[2rem] flex ${width}  ${justifyCenter}`}>
+      <span className={`mr-[15px] flex w-[100px] items-center text-sm text-[#1B304A] ${titleHidden}`}>
+        &#183; {title}
+      </span>
       <div className="flex h-[25px] w-[50%]  items-center rounded-xl bg-[#F4F4F4] p-2">
         <div className="w-[50%]">
           <input

@@ -42,7 +42,11 @@ function AddProductPage() {
     })
     return response.json()
   }
-  const { mutate } = useMutation((submitValue: any) => addProduct(submitValue))
+  const { mutate } = useMutation((submitValue: any) => addProduct(submitValue), {
+    onSuccess: () => {
+      navigate('/productlist')
+    }
+  })
 
   //AWSAPI
   const [progress, setProgress] = useState(0)
@@ -115,7 +119,6 @@ function AddProductPage() {
     }
     awsUpload()
     mutate(submitValue)
-    navigate('/productlist')
   }
 
   useEffect(() => {

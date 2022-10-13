@@ -141,12 +141,14 @@ function MainInfoForm({ mainInformHandler }: Props) {
           title="추천상품"
           id="recommend"
           onChange={recommendValueChangeHandler}
+          justifyCenter="justify-center"
           width="w-[50%]"
         />
         <SettingSwitcher
           title="상품보이기"
           id="mainExposure"
           onChange={mainExposureValueChangeHandler}
+          justifyCenter="justify-center"
           width="w-[50%]"
         />
       </div>

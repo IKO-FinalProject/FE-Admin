@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { AiOutlineSearch } from 'react-icons/ai'
 import Button from '../ui/Button'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const { VITE_API } = import.meta.env
 

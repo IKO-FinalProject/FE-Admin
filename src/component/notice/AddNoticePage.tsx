@@ -1,3 +1,5 @@
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+
 import { useRef, useState } from 'react'
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
@@ -6,14 +8,35 @@ import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
 import { useNavigate } from 'react-router-dom'
 
+const { VITE_API } = import.meta.env
+
 function AddNoticePage() {
-  const [categoryValue, setCategoryValue] = useState('')
+  const [categoryValue, setCategoryValue] = useState(0)
   const [titleValue, setTitleValue] = useState('')
   const [htmlContent, setHtmlContent] = useState('')
   const quillRef = useRef()
 
+  //ADDEVENT API
+
+  async function addNotice(submitValue: any) {
+    const response = await fetch(`${VITE_API}/admin/insertBoard`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(submitValue)
+    })
+    return response.json()
+  }
+
+  const { mutate } = useMutation((submitValue: any) => addNotice(submitValue), {
+    onSuccess: () => {
+      navigate('/noticelist')
+    }
+  })
+
   const categoryValueChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategoryValue(e.target.value)
+    setCategoryValue(Number(e.target.value))
   }
   const titleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleValue(e.target.value)
@@ -21,9 +44,16 @@ function AddNoticePage() {
 
   const formSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault()
-    if (categoryValue.length === 0 || titleValue.length === 0 || htmlContent.length === 0) {
+    if (titleValue.length === 0 || htmlContent.length === 0) {
       alert('모든 값을 입력하세요!')
     }
+    const submitValue = {
+      boardContent: htmlContent,
+      boardTitle: titleValue,
+      boardType: categoryValue
+    }
+
+    mutate(submitValue)
   }
 
   const navigate = useNavigate()
@@ -44,13 +74,13 @@ function AddNoticePage() {
           id="noticeCategory"
           className=" h-[25px] w-[140px] rounded-lg border-[#C4C4C4] text-[#C4C4C4]"
         >
-          <option value="1">필독 공지사항</option>
-          <option value="2">배송 관련</option>
-          <option value="3">취소/교환/반품</option>
-          <option value="4">배송 전 변경</option>
-          <option value="5">결제 관련</option>
-          <option value="6">제품/도수</option>
-          <option value="7">쿠폰/회원 정보</option>
+          <option value="0">필독 공지사항</option>
+          <option value="1">배송 관련</option>
+          <option value="2">취소/교환/반품</option>
+          <option value="3">결제 관련</option>
+          <option value="4">제품/도수</option>
+          <option value="5">쿠폰/회원 정보</option>
+          <option value="6">기타</option>
         </select>
         <Input
           type="text"

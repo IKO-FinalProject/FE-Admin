@@ -103,28 +103,28 @@ function OrderListPage() {
               <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 <input type="checkbox" name="xxx" value="yyy" />
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 주문번호
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 주문일시
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 주문상태
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 상품명
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 주문자명
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 수취인명
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 수취인 전화번호
               </th>
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 수취인 주소
               </th>
             </tr>
@@ -133,8 +133,8 @@ function OrderListPage() {
             {orderList.data &&
               orderList.data.map((order: any) => {
                 return (
-                  <tr className=" w-full" key={order.orderInfo.orderId}>
-                    <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                  <tr className=" w-full " key={order.orderInfo.orderId}>
+                    <th className=" p-2 align-middle" style={{ border: '1px solid #C2C9D1' }}>
                       <input
                         className=""
                         type="checkbox"

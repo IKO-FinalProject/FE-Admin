@@ -8,6 +8,7 @@ import Headliner from '../ui/HeadLiner'
 import { useEffect, useState } from 'react'
 import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
+import SettingSwitcher from '../product/SettingSwitcher'
 
 const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY, VITE_BUCKET_NAME, VITE_API } = import.meta.env
 
@@ -16,13 +17,13 @@ function AddEventPage() {
   const [description, setDescription] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
+  const [topFixed, setTopFixed] = useState(0)
   const [mainImage, setMainImage] = useState([])
   const [mainImageUrl, setMainImageUrl] = useState('')
   const [mainImageData, setMainImageData] = useState(null)
   const [explainImage, setExplainImage] = useState([])
   const [explainImageUrl, setExplainImageUrl] = useState('')
   const [explainImageData, setExplainImageData] = useState(null)
-
   const [allImageDataList, setAllImageDataList] = useState([])
 
   const navigate = useNavigate()
@@ -40,7 +41,11 @@ function AddEventPage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue))
+  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue), {
+    onSuccess: () => {
+      navigate('/eventlist')
+    }
+  })
 
   //AWS API
 
@@ -110,6 +115,10 @@ function AddEventPage() {
     setExplainImageData(image[0].file)
   }
 
+  const eventFixedTopValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTopFixed(Number(e.target.value))
+  }
+
   useEffect(() => {
     const allImageData: any = [mainImageData, explainImageData]
     setAllImageDataList(allImageData)
@@ -135,12 +144,12 @@ function AddEventPage() {
       explainImageUrl,
       mainImageUrl,
       startTime: `${startTime}T00:00:00.428Z`,
-      title
+      title,
+      topFixed
     }
 
     awsUpload()
     mutate(submitValue)
-    navigate('/eventlist')
   }
 
   const cancelClick = () => {
@@ -192,6 +201,18 @@ function AddEventPage() {
               label="endDate"
               value={endTime}
               onChange={endTimeChangeHandler}
+            />
+          </div>
+        </div>
+        <div>
+          <p className="mt-[20px] ml-[10px] font-bold text-[#1B304A]">&#183; 이벤트 상단 고정</p>
+          <div className="ml-[20px]">
+            <SettingSwitcher
+              titleHidden="hidden"
+              title="eventFixedTop"
+              id="eventFixedTop"
+              onChange={eventFixedTopValueChangeHandler}
+              width="w-[50%]"
             />
           </div>
         </div>

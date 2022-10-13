@@ -72,7 +72,7 @@ function OrderDetailPage() {
               상품주문상태
             </td>
             <td className="w-[30%] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
-              {mainOrderInfo.orderInfo.status}
+              -
             </td>
             <td className="w-[20%] bg-[#DADADA] p-2 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
               클레임

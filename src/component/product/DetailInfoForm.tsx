@@ -258,8 +258,15 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
         />
       </div>
       <div className="flex justify-between">
-        <SettingSwitcher title="할인중" id="isSale" onChange={isSaleValueChangeHandler} width="w-[50%]" />
         <SettingSwitcher
+          justifyCenter="justify-center"
+          title="할인중"
+          id="isSale"
+          onChange={isSaleValueChangeHandler}
+          width="w-[50%]"
+        />
+        <SettingSwitcher
+          justifyCenter="justify-center"
           title="옵션보이기"
           id="detailsExposure"
           onChange={detailsExposureValueChangeHandler}
