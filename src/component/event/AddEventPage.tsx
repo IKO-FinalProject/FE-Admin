@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
 import SettingSwitcher from '../product/SettingSwitcher'
+import { myBucket } from '../product/AddProductPage'
 
 const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY, VITE_BUCKET_NAME, VITE_API } = import.meta.env
 
@@ -48,16 +49,6 @@ function AddEventPage() {
   })
 
   //AWS API
-
-  AWS.config.update({
-    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
-    secretAccessKey: VITE_SECRET_ACCESS_KEY
-  })
-
-  const myBucket = new AWS.S3({
-    params: { Bucket: VITE_BUCKET_NAME },
-    region: 'ap-northeast-2'
-  })
 
   const [progress, setProgress] = useState(0)
 
