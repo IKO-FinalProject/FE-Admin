@@ -6,7 +6,7 @@ AWS.config.update({
   secretAccessKey: VITE_SECRET_ACCESS_KEY
 })
 
-const myBucket = new AWS.S3({
+export const myBucket = new AWS.S3({
   params: { Bucket: VITE_BUCKET_NAME },
   region: 'ap-northeast-2'
 })
