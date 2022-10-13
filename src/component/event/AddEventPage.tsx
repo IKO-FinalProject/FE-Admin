@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import AWS from 'aws-sdk'
+import ReactS3Client from 'react-aws-s3-typescript'
 
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react'
 import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
 import SettingSwitcher from '../product/SettingSwitcher'
-import { myBucket } from '../product/AddProductPage'
 
 const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY, VITE_BUCKET_NAME, VITE_API } = import.meta.env
 
@@ -52,22 +51,24 @@ function AddEventPage() {
 
   const [progress, setProgress] = useState(0)
 
-  const uploadFile = (file: any) => {
-    const params = {
-      ACL: 'public-read',
-      Body: file,
-      Bucket: VITE_BUCKET_NAME,
-      Key: file.name
-    }
+  const s3Config = {
+    bucketName: VITE_BUCKET_NAME,
+    region: 'ap-northeast-2',
+    accessKeyId: VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: VITE_SECRET_ACCESS_KEY
+  }
 
-    myBucket
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        setProgress(Math.round((evt.loaded / evt.total) * 100))
-      })
-      .send((err) => {
-        if (err) console.log(err)
-      })
+  const uploadFile = async (file: any) => {
+    const s3 = new ReactS3Client(s3Config)
+
+    try {
+      const res = await s3.uploadFile(file)
+
+      console.log(res)
+    } catch (exception) {
+      console.log(exception)
+      console.log('123')
+    }
   }
 
   const awsUpload = () => {
@@ -75,7 +76,6 @@ function AddEventPage() {
       uploadFile(file)
     })
   }
-
   //STATE HANDLER
 
   const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,7 +140,7 @@ function AddEventPage() {
     }
 
     awsUpload()
-    mutate(submitValue)
+    // mutate(submitValue)
   }
 
   const cancelClick = () => {
