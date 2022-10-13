@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import AWS from 'aws-sdk'
+import { myBucket } from '../ui/aws'
 
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
@@ -45,41 +45,31 @@ function AddEventPage() {
 
   //AWS API
 
-  // AWS.config.update({
-  //   accessKeyId: VITE_AWS_ACCESS_KEY_ID,
-  //   secretAccessKey: VITE_SECRET_ACCESS_KEY
-  // })
+  const [progress, setProgress] = useState(0)
 
-  // const myBucket = new AWS.S3({
-  //   params: { Bucket: VITE_BUCKET_NAME },
-  //   region: 'ap-northeast-2'
-  // })
+  const uploadFile = (file: any) => {
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: VITE_BUCKET_NAME,
+      Key: file.name
+    }
 
-  // const [progress, setProgress] = useState(0)
+    myBucket
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        setProgress(Math.round((evt.loaded / evt.total) * 100))
+      })
+      .send((err) => {
+        if (err) console.log(err)
+      })
+  }
 
-  // const uploadFile = (file: any) => {
-  //   const params = {
-  //     ACL: 'public-read',
-  //     Body: file,
-  //     Bucket: VITE_BUCKET_NAME,
-  //     Key: file.name
-  //   }
-
-  //   myBucket
-  //     .putObject(params)
-  //     .on('httpUploadProgress', (evt) => {
-  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
-  //     })
-  //     .send((err) => {
-  //       if (err) console.log(err)
-  //     })
-  // }
-
-  // const awsUpload = () => {
-  //   allImageDataList.map((file) => {
-  //     uploadFile(file)
-  //   })
-  // }
+  const awsUpload = () => {
+    allImageDataList.map((file) => {
+      uploadFile(file)
+    })
+  }
 
   //STATE HANDLER
 
@@ -144,7 +134,7 @@ function AddEventPage() {
       topFixed
     }
 
-    // awsUpload()
+    awsUpload()
     mutate(submitValue)
     navigate('/eventlist')
   }
