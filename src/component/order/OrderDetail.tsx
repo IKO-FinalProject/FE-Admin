@@ -10,9 +10,7 @@ function OrderDetailPage() {
   const params = useParams()
 
   async function getOrdersDetails() {
-    const response = await fetch(
-      `https://iko-lenssis.click/admin/insertProduct/admin/searchOrderById?orderId=${params.orderId}`
-    )
+    const response = await fetch(`https://iko-lenssis.click/admin/searchOrderById?orderId=${params.orderId}`)
     return response.json()
   }
 
