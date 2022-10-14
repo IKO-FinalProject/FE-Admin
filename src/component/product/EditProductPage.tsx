@@ -24,7 +24,7 @@ function EditProductPage() {
     series: '',
     feature: []
   })
-  const { reactS3Client } = require('react-aws-s3-typescript')
+
   const navigate = useNavigate()
   const params = useParams()
 
@@ -76,6 +76,7 @@ function EditProductPage() {
   // }
 
   const uploadFile = async (file: any) => {
+    const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
       const res = await s3.uploadFile(file)
