@@ -6,7 +6,6 @@ import MainInfoForm from './MainInfoForm'
 import DetailInfoForm from './DetailInfoForm'
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from 'react-query'
-const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
 import { s3Config } from '../ui/aws'
 import type { MainInfoFormValue } from './MainInfoForm'
 

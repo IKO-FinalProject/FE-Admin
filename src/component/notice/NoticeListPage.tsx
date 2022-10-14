@@ -6,8 +6,6 @@ import { useQuery } from 'react-query'
 import { useNavigate, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-const { VITE_API } = import.meta.env
-
 async function getNotices() {
   const response = await fetch(`https://iko-lenssis.click/admin/boardMain`)
   return response.json()

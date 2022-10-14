@@ -11,8 +11,6 @@ import { useNavigate } from 'react-router-dom'
 
 import type { MainInfoFormValue } from './MainInfoForm'
 
-const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
-
 function AddProductPage() {
   const [optionList, setOptionList] = useState([])
   const [allImageDataList, setAllImageDataList] = useState([])
@@ -68,8 +66,9 @@ function AddProductPage() {
   //       if (err) console.log(err)
   //     })
   // }
-  const { reactS3Client } = require('react-aws-s3-typescript')
+
   const uploadFile = async (file: any) => {
+    const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
       const res = await s3.uploadFile(file)

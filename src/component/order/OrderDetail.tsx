@@ -2,7 +2,6 @@ import ContentBox from '../ui/ContentBox'
 import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import Button from '../ui/Button'
 import { useQuery } from 'react-query'
-const { VITE_API } = import.meta.env
 
 function OrderDetailPage() {
   const location = useLocation()
@@ -11,7 +10,9 @@ function OrderDetailPage() {
   const params = useParams()
 
   async function getOrdersDetails() {
-    const response = await fetch(`${VITE_API}/admin/searchOrderById?orderId=${params.orderId}`)
+    const response = await fetch(
+      `https://iko-lenssis.click/admin/insertProduct/admin/searchOrderById?orderId=${params.orderId}`
+    )
     return response.json()
   }
 

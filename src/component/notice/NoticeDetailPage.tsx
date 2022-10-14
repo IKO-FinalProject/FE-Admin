@@ -4,7 +4,6 @@ import Headliner from '../ui/HeadLiner'
 import Button from '../ui/Button'
 import { useQuery } from 'react-query'
 import Parser from 'html-react-parser'
-const { VITE_API } = import.meta.env
 
 function NoticeDetailPage() {
   const params = useParams()

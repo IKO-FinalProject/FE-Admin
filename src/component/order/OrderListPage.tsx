@@ -1,14 +1,12 @@
 import ContentBox from '../ui/ContentBox'
-import Headliner from '../ui/HeadLiner'
 import Button from '../ui/Button'
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { MdRefresh } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-const { VITE_API } = import.meta.env
 
 async function getOrders() {
-  const response = await fetch(`${VITE_API}/admin/allOrderInfo`)
+  const response = await fetch(`https://iko-lenssis.click/admin/allOrderInfo`)
   return response.json()
 }
 
@@ -28,7 +26,7 @@ function OrderListPage() {
   }
 
   async function updateOrderStatus(submitValue: any) {
-    const response = await fetch(`${VITE_API}/admin/updateOrderStatus`, {
+    const response = await fetch(`https://iko-lenssis.click/admin/updateOrderStatus`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

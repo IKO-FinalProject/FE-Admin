@@ -68,8 +68,9 @@ function AddEventPage() {
   //       if (err) console.log(err)
   //     })
   // }
-  const { reactS3Client } = require('react-aws-s3-typescript')
+
   const uploadFile = async (file: any) => {
+    const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
       const res = await s3.uploadFile(file)
