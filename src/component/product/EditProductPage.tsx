@@ -30,7 +30,9 @@ function EditProductPage() {
   const params = useParams()
 
   async function getProductDetails() {
-    const response = await fetch(`${VITE_API}/admin/searchDetailsById?productId=${params.productId}`)
+    const response = await fetch(
+      `https://iko-lenssis.click/admin/searchDetailsById?productId=${params.productId}`
+    )
     return response.json()
   }
 
@@ -38,7 +40,7 @@ function EditProductPage() {
   const { data: productDetail = fallback } = useQuery(['productDetail'], getProductDetails)
 
   async function updateProduct(submitValue: any) {
-    const response = await fetch(`${VITE_API}/admin/updateProduct`, {
+    const response = await fetch(`https://iko-lenssis.click/admin/updateProduct`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

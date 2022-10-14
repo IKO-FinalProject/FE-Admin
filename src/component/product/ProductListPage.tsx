@@ -17,7 +17,7 @@ import Button from '../ui/Button'
 const { VITE_API } = import.meta.env
 
 async function getProducts() {
-  const response = await fetch(`${VITE_API}/admin/allProductInfo`)
+  const response = await fetch(`https://iko-lenssis.click/admin/allProductInfo`)
   return response.json()
 }
 
@@ -31,7 +31,7 @@ function ProductListPage() {
   const { data: product = fallback } = useQuery(['productsList', currentPage], getProducts)
 
   async function deleteItems(id: number) {
-    const response = await fetch(`${VITE_API}/admin/deleteProduct?productId=${id}`, {
+    const response = await fetch(`https://iko-lenssis.click/admin/deleteProduct?productId=${id}`, {
       method: 'DELETE'
     })
     return response.json()

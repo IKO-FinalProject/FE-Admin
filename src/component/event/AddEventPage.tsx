@@ -31,7 +31,7 @@ function AddEventPage() {
   //ADDEVENT API
 
   async function addEvent(submitValue: any) {
-    const response = await fetch(`${VITE_API}/admin/insertEvent`, {
+    const response = await fetch(`https://iko-lenssis.click/admin/insertEvent`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

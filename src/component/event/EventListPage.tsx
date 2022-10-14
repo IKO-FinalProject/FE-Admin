@@ -9,7 +9,7 @@ import { useNavigate, Link } from 'react-router-dom'
 const { VITE_API } = import.meta.env
 
 async function getEvents() {
-  const response = await fetch(`${VITE_API}/event/main`)
+  const response = await fetch(`https://iko-lenssis.click/event/main`)
   return response.json()
 }
 

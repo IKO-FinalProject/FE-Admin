@@ -19,7 +19,7 @@ function AddNoticePage() {
   //ADDEVENT API
 
   async function addNotice(submitValue: any) {
-    const response = await fetch(`${VITE_API}/admin/insertBoard`, {
+    const response = await fetch(`https://iko-lenssis.click/admin/insertBoard`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

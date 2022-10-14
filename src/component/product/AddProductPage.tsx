@@ -33,7 +33,7 @@ function AddProductPage() {
 
   //ADDPRODUCT API
   async function addProduct(submitValue: any) {
-    const response = await fetch(`${VITE_API}/admin/insertProduct`, {
+    const response = await fetch(`https://iko-lenssis.click/admin/insertProduct`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

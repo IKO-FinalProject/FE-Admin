@@ -10,7 +10,7 @@ function EventDetailPage() {
   const navigate = useNavigate()
 
   async function getEventDetails() {
-    const response = await fetch(`${VITE_API}/event/details?eventId=${params.eventId}`)
+    const response = await fetch(`https://iko-lenssis.click/event/details?eventId=${params.eventId}`)
     return response.json()
   }
 

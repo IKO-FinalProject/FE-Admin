@@ -11,7 +11,7 @@ function NoticeDetailPage() {
   const navigate = useNavigate()
 
   async function getNoticeDetails() {
-    const response = await fetch(`${VITE_API}/board/details?boardId=${params.noticeId}`)
+    const response = await fetch(`https://iko-lenssis.click/board/details?boardId=${params.noticeId}`)
     return response.json()
   }
 
