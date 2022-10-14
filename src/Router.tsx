@@ -10,6 +10,7 @@ import AddProductPage from './component/product/AddProductPage'
 import OrderListPage from './component/order/OrderListPage'
 import OrderDetailPage from './component/order/OrderDetail'
 import NoticeListPage from './component/notice/NoticeListPage'
+import NoticeDetailPage from './component/notice/NoticeDetailPage'
 import AddNoticePage from './component/notice/AddNoticePage'
 import EventListPage from './component/event/EventListPage'
 import EventDetailPage from './component/event/EventDetailPage'
@@ -40,6 +41,7 @@ const Router = () => {
             <Route path="/orderlist" element={<OrderListPage />} />
             <Route path="/orderlist/:orderId" element={<OrderDetailPage />} />
             <Route path="/noticelist" element={<NoticeListPage />} />
+            <Route path="/noticelist/:noticeId" element={<NoticeDetailPage />} />
             <Route path="/addnotice" element={<AddNoticePage />} />
             <Route path="/eventlist" element={<EventListPage />} />
             <Route path="/eventlist/:eventId" element={<EventDetailPage />} />

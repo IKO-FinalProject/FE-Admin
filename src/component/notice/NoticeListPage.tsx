@@ -54,12 +54,12 @@ function NoticeListPage() {
           notices.data.boardDataList.map((notice: any) => {
             return (
               <li
-                className="relative flex py-[.5rem]"
+                className="relative flex py-[.7rem]"
                 key={notice.boardId}
                 style={{ borderBottom: '1px solid #C2C9D1' }}
               >
                 <input className="" type="checkbox" name={notice.boardTitle} value={notice.boardId} />
-                <span className="ml-[2rem] w-[100px] text-center">{category(notice.boardType)}</span>
+                <span className="ml-[2rem] w-[150px] text-center">{category(notice.boardType)}</span>
                 <Link to={`/noticelist/${notice.boardId}`} className="ml-[4rem]">
                   {notice.boardTitle}
                 </Link>
