@@ -1,19 +1,17 @@
-import { useMutation } from 'react-query'
-
-import { myBucket } from '../ui/aws'
 import ContentBox from '../ui/ContentBox'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
 import MainInfoForm from './MainInfoForm'
 import DetailInfoForm from './DetailInfoForm'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useQuery, useMutation } from 'react-query'
+import { myBucket } from '../ui/aws'
+const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
 
 import type { MainInfoFormValue } from './MainInfoForm'
 
-const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
-
-function AddProductPage() {
+function EditProductPage() {
   const [optionList, setOptionList] = useState([])
   const [allImageDataList, setAllImageDataList] = useState([])
   const [awsData, setAwsData] = useState([])
@@ -30,11 +28,19 @@ function AddProductPage() {
   })
 
   const navigate = useNavigate()
+  const params = useParams()
 
-  //ADDPRODUCT API
-  async function addProduct(submitValue: any) {
-    const response = await fetch(`${VITE_API}/admin/insertProduct`, {
-      method: 'POST',
+  async function getProductDetails() {
+    const response = await fetch(`${VITE_API}/admin/searchDetailsById?productId=${params.productId}`)
+    return response.json()
+  }
+
+  const fallback: string[] = []
+  const { data: productDetail = fallback } = useQuery(['productDetail'], getProductDetails)
+
+  async function updateProduct(submitValue: any) {
+    const response = await fetch(`${VITE_API}/admin/updateProduct`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -42,7 +48,7 @@ function AddProductPage() {
     })
     return response.json()
   }
-  const { mutate } = useMutation((submitValue: any) => addProduct(submitValue), {
+  const { mutate } = useMutation((submitValue: any) => updateProduct(submitValue), {
     onSuccess: () => {
       navigate('/productlist')
     }
@@ -105,7 +111,7 @@ function AddProductPage() {
     }
     const submitValue = {
       ...mainInform,
-      productOptionSaveRequestList: optionList
+      productOptionUpdateRequestList: optionList
     }
     awsUpload()
     mutate(submitValue)
@@ -128,12 +134,16 @@ function AddProductPage() {
       <form onSubmit={formSubmitHandler}>
         <ContentBox marginBottom="mb-[20px]" marginRight="mr-[20px]">
           <Headliner>메인정보 입력</Headliner>
-          <MainInfoForm mainInformHandler={mainInformHandler} />
+          <MainInfoForm
+            initialValue={productDetail.data && productDetail.data.productInfo}
+            mainInformHandler={mainInformHandler}
+          />
         </ContentBox>
 
         <ContentBox marginBottom="mb-[50px]" marginRight="mr-[20px]">
           <Headliner>상세정보 입력</Headliner>
           <DetailInfoForm
+            initialValue={productDetail.data && productDetail.data.detailsInfo}
             optionListHandler={optionListHandler}
             allImageDataListHandler={allImageDataListHandler}
           />
@@ -157,7 +167,7 @@ function AddProductPage() {
               textColor="text-white"
               marginLeft="ml-[10px]"
             >
-              등록하기
+              수정하기
             </Button>
           </div>
         </ContentBox>
@@ -166,4 +176,4 @@ function AddProductPage() {
   )
 }
 
-export default AddProductPage
+export default EditProductPage

@@ -8,11 +8,11 @@ type itemType = {
 }
 
 import { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import Headliner from '../ui/HeadLiner'
+import { useNavigate } from 'react-router-dom'
 import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
-import DUMMY from './DUMMY'
 
 const { VITE_API } = import.meta.env
 
@@ -23,11 +23,39 @@ async function getProducts() {
 
 function ProductListPage() {
   const [currentPage, setCurrentPage] = useState(1)
+  const [checkItems, setCheckItems]: any = useState([])
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const fallback: string[] = []
   const { data: product = fallback } = useQuery(['productsList', currentPage], getProducts)
 
-  const Dummy: itemType[] = DUMMY
+  async function deleteItems(id: number) {
+    const response = await fetch(`${VITE_API}/admin/deleteProduct?productId=${id}`, {
+      method: 'DELETE'
+    })
+    return response.json()
+  }
+
+  const { mutate } = useMutation((id: number) => deleteItems(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['productsList', currentPage])
+    }
+  })
+
+  const deleteItemsHandler = () => {
+    checkItems.map((id: number) => {
+      mutate(id)
+    })
+  }
+
+  const checkboxHandler = (e: { target: { checked: any; value: any } }) => {
+    if (e.target.checked) {
+      setCheckItems([...checkItems, e.target.value])
+    } else {
+      setCheckItems(checkItems.filter((el: any) => el !== e.target.value))
+    }
+  }
 
   return (
     <ContentBox marginBottom="mb-[40px]" marginRight="mr-[20px]">
@@ -39,6 +67,7 @@ function ProductListPage() {
           height="h-[30px]"
           bgColor="bg-[#1B304A]"
           textColor="text-white"
+          onClick={deleteItemsHandler}
         >
           선택 삭제
         </Button>
@@ -94,8 +123,14 @@ function ProductListPage() {
             product.data.map((item: itemType) => {
               return (
                 <tr className=" w-full" key={item.productId}>
-                  <td className="p-2 align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                    <input className="" type="checkbox" name={item.productName} value={item.productId} />
+                  <td className="h-[35px] w-[25px] p-2 align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                    <input
+                      onChange={checkboxHandler}
+                      className=""
+                      type="checkbox"
+                      name="productlist"
+                      value={item.productId}
+                    />
                   </td>
                   <td className="w-[70px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                     <Button
@@ -107,6 +142,9 @@ function ProductListPage() {
                       borderColor="border-[#C2C9D1]"
                       display="block"
                       margin="m-auto"
+                      onClick={() => {
+                        navigate(`/productlist/${item.productId}`)
+                      }}
                     >
                       수정
                     </Button>

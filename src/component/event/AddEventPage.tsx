@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-// import { myBucket } from '../ui/aws'
+import { myBucket } from '../ui/aws'
 
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
@@ -10,7 +10,7 @@ import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
 import SettingSwitcher from '../product/SettingSwitcher'
 
-const { VITE_AWS_ACCESS_KEY_ID, VITE_SECRET_ACCESS_KEY, VITE_BUCKET_NAME, VITE_API } = import.meta.env
+const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
 
 function AddEventPage() {
   const [title, setTitle] = useState('')
@@ -41,35 +41,39 @@ function AddEventPage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue))
+  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue), {
+    onSuccess: () => {
+      navigate('/eventlist')
+    }
+  })
 
   //AWS API
 
-  // const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState(0)
 
-  // const uploadFile = (file: any) => {
-  //   const params = {
-  //     ACL: 'public-read',
-  //     Body: file,
-  //     Bucket: VITE_BUCKET_NAME,
-  //     Key: file.name
-  //   }
+  const uploadFile = (file: any) => {
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: VITE_BUCKET_NAME,
+      Key: file.name
+    }
 
-  //   myBucket
-  //     .putObject(params)
-  //     .on('httpUploadProgress', (evt) => {
-  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
-  //     })
-  //     .send((err) => {
-  //       if (err) console.log(err)
-  //     })
-  // }
+    myBucket
+      .putObject(params)
+      .on('httpUploadProgress', (evt) => {
+        setProgress(Math.round((evt.loaded / evt.total) * 100))
+      })
+      .send((err) => {
+        if (err) console.log(err)
+      })
+  }
 
-  // const awsUpload = () => {
-  //   allImageDataList.map((file) => {
-  //     uploadFile(file)
-  //   })
-  // }
+  const awsUpload = () => {
+    allImageDataList.map((file) => {
+      uploadFile(file)
+    })
+  }
 
   //STATE HANDLER
 
@@ -134,9 +138,8 @@ function AddEventPage() {
       topFixed
     }
 
-    // awsUpload()
+    awsUpload()
     mutate(submitValue)
-    navigate('/eventlist')
   }
 
   const cancelClick = () => {
@@ -200,6 +203,7 @@ function AddEventPage() {
               id="eventFixedTop"
               onChange={eventFixedTopValueChangeHandler}
               width="w-[50%]"
+              initialValue={topFixed}
             />
           </div>
         </div>

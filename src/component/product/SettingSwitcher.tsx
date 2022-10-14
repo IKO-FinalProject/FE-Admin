@@ -1,4 +1,4 @@
-const SettingSwitcher = ({ title, id, onChange, width, titleHidden, justifyCenter }: any) => {
+const SettingSwitcher = ({ title, id, onChange, width, titleHidden, justifyCenter, initialValue }: any) => {
   return (
     <div className={`my-4 mb-[2rem] flex ${width}  ${justifyCenter}`}>
       <span className={`mr-[15px] flex w-[100px] items-center text-sm text-[#1B304A] ${titleHidden}`}>
@@ -13,6 +13,7 @@ const SettingSwitcher = ({ title, id, onChange, width, titleHidden, justifyCente
             className="peer hidden"
             value={1}
             onChange={onChange}
+            checked={initialValue === 1 && true}
           />
           <label
             htmlFor={id + 'True'}
@@ -28,8 +29,8 @@ const SettingSwitcher = ({ title, id, onChange, width, titleHidden, justifyCente
             id={id + 'False'}
             className="peer hidden"
             value={0}
-            defaultChecked
             onChange={onChange}
+            checked={initialValue === 0 && true}
           />
           <label
             htmlFor={id + 'False'}

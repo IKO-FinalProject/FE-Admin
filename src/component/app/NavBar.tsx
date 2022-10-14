@@ -68,7 +68,6 @@ function NavBar() {
             menuList={[
               { title: '상품리스트', link: '/productlist' },
               { title: '상품 등록', link: '/addproduct' },
-              { title: '상품 수정', link: '/' },
               { title: '연관상품 관리', link: '/' }
             ]}
           />
@@ -173,8 +172,7 @@ function NavBar() {
             menuList={[
               { title: '공지사항 리스트', link: '/noticelist' },
               { title: '공지사항 작성', link: '/addnotice' },
-              { title: '공지사항 상세', link: '/noticedetail' },
-              { title: '공지사항 수정', link: '/' }
+              { title: '공지사항 상세', link: '/noticedetail' }
             ]}
           />
         )}

@@ -5,6 +5,7 @@ import MainWrapper from './component/layout/MainWrapper'
 import Login from './component/app/Login'
 import MainPage from './component/app/MainPage'
 import ProductListPage from './component/product/ProductListPage'
+import EditProductPage from './component/product/EditProductPage'
 import AddProductPage from './component/product/AddProductPage'
 import OrderListPage from './component/order/OrderListPage'
 import OrderDetailPage from './component/order/OrderDetail'
@@ -34,6 +35,7 @@ const Router = () => {
           <Route element={<MainWrapper />}>
             <Route path="/" element={<MainPage />} />
             <Route path="/productlist" element={<ProductListPage />} />
+            <Route path="/productlist/:productId" element={<EditProductPage />} />
             <Route path="/addproduct" element={<AddProductPage />} />
             <Route path="/orderlist" element={<OrderListPage />} />
             <Route path="/orderlist/:orderId" element={<OrderDetailPage />} />

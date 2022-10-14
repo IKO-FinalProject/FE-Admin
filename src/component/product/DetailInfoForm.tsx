@@ -12,9 +12,10 @@ const { VITE_BUCKET_NAME } = import.meta.env
 type Props = {
   optionListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
   allImageDataListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
+  initialValue?: any
 }
 
-function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
+function DetailInfoForm({ optionListHandler, allImageDataListHandler, initialValue }: Props) {
   const [graphicDiameter, setGraphicDiameter] = useState(0)
   const [basecurve, setBasecurve] = useState(0)
   const [color, setColor] = useState('')
@@ -36,6 +37,12 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
 
   const [optionList, setOptionList]: any = useState([])
   const [allImageDataList, setAllImageDataList]: any = useState([])
+
+  useEffect(() => {
+    if (initialValue) {
+      setOptionList(initialValue)
+    }
+  }, [initialValue])
 
   const graphicDiameterValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGraphicDiameter(Number(e.target.value))
@@ -264,6 +271,7 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
           id="isSale"
           onChange={isSaleValueChangeHandler}
           width="w-[50%]"
+          initialValue={isSale}
         />
         <SettingSwitcher
           justifyCenter="justify-center"
@@ -271,6 +279,7 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
           id="detailsExposure"
           onChange={detailsExposureValueChangeHandler}
           width="w-[50%]"
+          initialValue={detailsExposure}
         />
       </div>
       <PeriodSwitcher onChange={periodValueChangeHandler} />
@@ -308,20 +317,20 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler }: Props) {
             <li
               key={index}
               style={{ borderTop: '1px solid #DADADA' }}
-              className="relative flex h-[45px] w-[80%] items-center justify-center"
+              className="relative flex h-[45px] w-full items-center justify-center"
             >
               <span className="absolute left-[50px] font-semibold">옵션 {index + 1} </span>
-              <ul className="flex items-center justify-center">
-                <li> {option.graphicDiameter} /</li>
-                <li className="ml-1"> {option.basecurve} /</li>
+              <ul className="flex  items-center justify-center">
+                <li> {option.graphicDiameter}mm /</li>
+                <li className="ml-1"> {option.basecurve}mm /</li>
                 <li className="ml-1"> {option.color} /</li>
                 <li className="ml-1"> {option.colorCode} /</li>
                 <li className="ml-1"> {option.material} /</li>
-                <li className="ml-1"> {option.detailPrice} /</li>
-                <li className="ml-1"> {option.moisture} /</li>
+                <li className="ml-1"> {option.detailsPrice}円 /</li>
+                <li className="ml-1"> {option.moisture}% /</li>
                 <li className="ml-1"> {option.isSale ? '할인 O' : '할인 X'} /</li>
                 <li className="ml-1"> {option.detailsExposure ? '옵션보이기' : '옵션숨기기'} /</li>
-                <li className="ml-1"> {option.period}</li>
+                <li className="ml-1"> {option.period}day</li>
                 <button
                   className="absolute right-[50px] cursor-pointer border-none bg-white text-[#DADADA] hover:text-[red]"
                   onClick={() => deleteOption(index)}

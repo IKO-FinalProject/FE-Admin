@@ -19,6 +19,24 @@ function NoticeListPage() {
   const fallback: string[] = []
   const { data: notices = fallback } = useQuery(['noticesList', currentPage], getNotices)
 
+  const category = (status: number) => {
+    if (status === 0) {
+      return '필독 공지사항'
+    } else if (status === 1) {
+      return '배송관련'
+    } else if (status === 2) {
+      return '취소 / 교환 / 반품'
+    } else if (status === 3) {
+      return '결제 관련'
+    } else if (status === 4) {
+      return '제품 도수'
+    } else if (status === 5) {
+      return '쿠폰 / 회원정보'
+    } else {
+      return '기타'
+    }
+  }
+
   const navigate = useNavigate()
 
   const addNoticeClick = () => {
@@ -36,12 +54,12 @@ function NoticeListPage() {
           notices.data.boardDataList.map((notice: any) => {
             return (
               <li
-                className="relative py-[.5rem]"
+                className="relative flex py-[.5rem]"
                 key={notice.boardId}
                 style={{ borderBottom: '1px solid #C2C9D1' }}
               >
                 <input className="" type="checkbox" name={notice.boardTitle} value={notice.boardId} />
-                <span className="ml-[2rem]">{notice.boardType}</span>
+                <span className="ml-[2rem] w-[100px] text-center">{category(notice.boardType)}</span>
                 <Link to={`/noticelist/${notice.boardId}`} className="ml-[4rem]">
                   {notice.boardTitle}
                 </Link>

@@ -16,9 +16,10 @@ export type MainInfoFormValue = {
 
 type Props = {
   mainInformHandler: React.Dispatch<React.SetStateAction<MainInfoFormValue>>
+  initialValue?: any
 }
 
-function MainInfoForm({ mainInformHandler }: Props) {
+function MainInfoForm({ mainInformHandler, initialValue }: Props) {
   //메인정보상태
   const [productName, setProductName] = useState<MainInfoFormValue['productName']>('')
   const [price, setPrice] = useState(0)
@@ -29,8 +30,8 @@ function MainInfoForm({ mainInformHandler }: Props) {
   const [exposure, setExposure] = useState(0)
   const [series, setSeries] = useState('')
   const [feature, setFeature] = useState<MainInfoFormValue['feature']>([])
-  const seriesList = ['에일린', '마리나', '샌드', '베티']
-  const featureList = ['UV', '수분', '블루라이트', '실리콘']
+  const seriesList = ['エイリン', 'ブリス', 'サンド', 'ウィサム', 'ハッシュ']
+  const featureList = ['UVカット', '水分', 'ブルーライト', 'シリコン']
 
   //메인정보핸들러
   const productTitleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +92,20 @@ function MainInfoForm({ mainInformHandler }: Props) {
     })
   }, [productName, price, discount, diameter, manufacturer, recommend, exposure, series, feature])
 
+  useEffect(() => {
+    if (initialValue) {
+      setProductName(initialValue.productName)
+      setPrice(initialValue.price)
+      setExposure(initialValue.exposure)
+      setFeature(initialValue.feature)
+      setManufacturer(initialValue.manufacturer)
+      setDiscount(initialValue.discount)
+      setDiameter(initialValue.diameter)
+      setRecommend(initialValue.recommend)
+      setSeries(initialValue.series)
+    }
+  }, [initialValue])
+
   return (
     <>
       <div>
@@ -143,6 +158,7 @@ function MainInfoForm({ mainInformHandler }: Props) {
           onChange={recommendValueChangeHandler}
           justifyCenter="justify-center"
           width="w-[50%]"
+          initialValue={recommend}
         />
         <SettingSwitcher
           title="상품보이기"
@@ -150,26 +166,28 @@ function MainInfoForm({ mainInformHandler }: Props) {
           onChange={mainExposureValueChangeHandler}
           justifyCenter="justify-center"
           width="w-[50%]"
+          initialValue={exposure}
         />
       </div>
 
       <div className="ml-[108px] mb-[2rem] flex justify-between">
         <div className="h-[250px] w-[45%] rounded-xl bg-[#F4F4F4] p-2">
-          {seriesList.map((series) => (
-            <div key={series}>
+          {seriesList.map((serieses) => (
+            <div key={serieses}>
               <input
                 type="radio"
                 name="series"
-                id={series}
+                id={serieses}
                 className="peer hidden"
-                value={series}
+                value={serieses}
                 onChange={seriesValueChangeHandler}
+                checked={series === serieses && true}
               />
               <label
-                htmlFor={series}
+                htmlFor={serieses}
                 className="block cursor-pointer select-none p-2 text-sm peer-checked:bg-[#D4D4D4] peer-checked:font-bold"
               >
-                &#8226; {series}
+                &#8226; {serieses}
               </label>
             </div>
           ))}

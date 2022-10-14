@@ -71,7 +71,7 @@ function OrderListPage() {
           <select
             id="orderSearch"
             value="default"
-            className=" h-[30px] w-[126px] rounded-lg border-[#C4C4C4] "
+            className=" h-[30px] w-[126px] rounded-lg border-[#C4C4C4] pl-[5px]"
             onChange={updateOrderStatusHandler}
           >
             <option value="default">배송상태변경</option>
@@ -79,7 +79,10 @@ function OrderListPage() {
             <option value="2">배송중</option>
             <option value="3">배송완료</option>
           </select>
-          <select id="orderSearch" className="  ml-[10px] h-[30px] w-[105px] rounded-lg border-[#C4C4C4] ">
+          <select
+            id="orderSearch"
+            className="  ml-[10px] h-[30px] w-[105px] rounded-lg border-[#C4C4C4] pl-[5px]"
+          >
             <option value="수취인명">10개씩</option>
           </select>
           <Button
@@ -97,19 +100,19 @@ function OrderListPage() {
         </div>
       </div>
       <div className="w-full overflow-x-auto">
-        <table className="m-auto w-[2500px] text-center" style={{ border: '1px solid #C2C9D1 ' }}>
+        <table className="m-auto w-[2000px] text-center" style={{ border: '1px solid #C2C9D1 ' }}>
           <thead>
             <tr className="h-[40px]   bg-[#E6E8ED]">
-              <th className=" align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className=" w-[45px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 <input type="checkbox" name="xxx" value="yyy" />
               </th>
-              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="w-[145px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 주문번호
               </th>
-              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="w-[100px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 주문일시
               </th>
-              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+              <th className="w-[100px] align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 주문상태
               </th>
               <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
@@ -126,6 +129,15 @@ function OrderListPage() {
               </th>
               <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
                 수취인 주소
+              </th>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                상세주소
+              </th>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                배송메시지
+              </th>
+              <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                결제금액
               </th>
             </tr>
           </thead>
@@ -167,7 +179,16 @@ function OrderListPage() {
                       {order.orderInfo.receiverPhone}
                     </th>
                     <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
-                      {order.orderInfo.postCode}
+                      {order.orderInfo.address}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.detailAddress}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.shippingMessage}
+                    </th>
+                    <th className="align-middle" style={{ border: '1px solid #C2C9D1' }}>
+                      {order.orderInfo.totalPrice}円
                     </th>
                   </tr>
                 )
