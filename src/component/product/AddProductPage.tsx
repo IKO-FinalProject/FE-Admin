@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
+import { s3Config } from '../ui/aws'
 
-import { myBucket } from '../ui/aws'
 import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
@@ -49,24 +49,33 @@ function AddProductPage() {
   })
 
   //AWSAPI
-  const [progress, setProgress] = useState(0)
+  // const [progress, setProgress] = useState(0)
 
-  const uploadFile = (file: any) => {
-    const params = {
-      ACL: 'public-read',
-      Body: file,
-      Bucket: VITE_BUCKET_NAME,
-      Key: file.name
+  // const uploadFile = (file: any) => {
+  //   const params = {
+  //     ACL: 'public-read',
+  //     Body: file,
+  //     Bucket: VITE_BUCKET_NAME,
+  //     Key: file.name
+  //   }
+
+  //   myBucket
+  //     .putObject(params)
+  //     .on('httpUploadProgress', (evt) => {
+  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
+  //     })
+  //     .send((err) => {
+  //       if (err) console.log(err)
+  //     })
+  // }
+  const { reactS3Client } = require('react-aws-s3-typescript')
+  const uploadFile = async (file: any) => {
+    const s3 = new reactS3Client(s3Config)
+    try {
+      const res = await s3.uploadFile(file)
+    } catch (exception) {
+      console.log(exception)
     }
-
-    myBucket
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        setProgress(Math.round((evt.loaded / evt.total) * 100))
-      })
-      .send((err) => {
-        if (err) console.log(err)
-      })
   }
 
   const awsUpload = () => {

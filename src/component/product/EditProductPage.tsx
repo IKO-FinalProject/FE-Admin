@@ -6,9 +6,8 @@ import MainInfoForm from './MainInfoForm'
 import DetailInfoForm from './DetailInfoForm'
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from 'react-query'
-import { myBucket } from '../ui/aws'
 const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
-
+import { s3Config } from '../ui/aws'
 import type { MainInfoFormValue } from './MainInfoForm'
 
 function EditProductPage() {
@@ -26,7 +25,7 @@ function EditProductPage() {
     series: '',
     feature: []
   })
-
+  const { reactS3Client } = require('react-aws-s3-typescript')
   const navigate = useNavigate()
   const params = useParams()
 
@@ -55,24 +54,33 @@ function EditProductPage() {
   })
 
   //AWSAPI
-  const [progress, setProgress] = useState(0)
+  // const [progress, setProgress] = useState(0)
 
-  const uploadFile = (file: any) => {
-    const params = {
-      ACL: 'public-read',
-      Body: file,
-      Bucket: VITE_BUCKET_NAME,
-      Key: file.name
+  // const uploadFile = (file: any) => {
+  //   const params = {
+  //     ACL: 'public-read',
+  //     Body: file,
+  //     Bucket: VITE_BUCKET_NAME,
+  //     Key: file.name
+  //   }
+
+  //   myBucket
+  //     .putObject(params)
+  //     .on('httpUploadProgress', (evt) => {
+  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
+  //     })
+  //     .send((err) => {
+  //       if (err) console.log(err)
+  //     })
+  // }
+
+  const uploadFile = async (file: any) => {
+    const s3 = new reactS3Client(s3Config)
+    try {
+      const res = await s3.uploadFile(file)
+    } catch (exception) {
+      console.log(exception)
     }
-
-    myBucket
-      .putObject(params)
-      .on('httpUploadProgress', (evt) => {
-        setProgress(Math.round((evt.loaded / evt.total) * 100))
-      })
-      .send((err) => {
-        if (err) console.log(err)
-      })
   }
 
   const awsUpload = () => {

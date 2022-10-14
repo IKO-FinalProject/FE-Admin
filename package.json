@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^18.8.5",
     "aws-sdk": "^2.1230.0",
     "axios": "^0.27.2",
     "html-react-parser": "^3.0.4",
