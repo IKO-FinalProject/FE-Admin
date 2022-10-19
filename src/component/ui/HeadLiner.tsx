@@ -9,7 +9,7 @@ function Headliner({ children }: HeadlinerProps) {
     <div className="mb-5" style={{ borderBottom: '1px solid #C4C4C4' }}>
       <h1
         className="flex h-[30px] w-[100px] items-center justify-center  text-[.9rem] font-bold drop-shadow-2xl"
-        style={{ borderBottom: '3px solid #A4C8E1', textShadow: '0 3px #C4C4C4' }}
+        style={{ borderBottom: '3px solid #A4C8E1' }}
       >
         {children}
       </h1>

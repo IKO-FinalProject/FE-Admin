@@ -12,6 +12,7 @@ type ButtonProps = {
   onClick?: () => void
   margin?: string
   display?: string
+  fontSize?: string
 }
 
 const Button = ({
@@ -25,11 +26,12 @@ const Button = ({
   borderColor,
   marginLeft,
   margin,
-  display
+  display,
+  fontSize
 }: ButtonProps) => {
   return (
     <button
-      className={`${margin} ${display} cursor-pointer ${textColor} ${marginLeft} rounded-md ${borderColor} ${height} ${width}  ${bgColor} flex items-center justify-center`}
+      className={`${fontSize} ${margin} ${display} cursor-pointer ${textColor} ${marginLeft} rounded-md ${borderColor} ${height} ${width}  ${bgColor} flex items-center justify-center`}
       type={type}
       onClick={onClick}
     >

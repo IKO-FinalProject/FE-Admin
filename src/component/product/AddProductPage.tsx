@@ -115,7 +115,7 @@ function AddProductPage() {
       ...mainInform,
       productOptionSaveRequestList: optionList
     }
-    awsUpload()
+    // awsUpload()
     mutate(submitValue)
   }
 
@@ -135,12 +135,22 @@ function AddProductPage() {
     <>
       <form onSubmit={formSubmitHandler}>
         <ContentBox marginBottom="mb-[20px]" marginRight="mr-[20px]">
-          <Headliner>메인정보 입력</Headliner>
+          <h1
+            className="relative mb-6 flex pb-2 text-[.9rem] font-bold"
+            style={{ borderBottom: '1px solid #C4C4C4' }}
+          >
+            <div>메인정보 입력</div>
+          </h1>
           <MainInfoForm mainInformHandler={mainInformHandler} />
         </ContentBox>
 
         <ContentBox marginBottom="mb-[50px]" marginRight="mr-[20px]">
-          <Headliner>상세정보 입력</Headliner>
+          <h1
+            className="relative mb-6 flex pb-2 text-[.9rem] font-bold"
+            style={{ borderBottom: '1px solid #C4C4C4' }}
+          >
+            <div>상세정보 입력</div>
+          </h1>
           <DetailInfoForm
             optionListHandler={optionListHandler}
             allImageDataListHandler={allImageDataListHandler}
@@ -148,21 +158,23 @@ function AddProductPage() {
           <div className="mt-[4rem] mb-[5rem] flex justify-center">
             <Button
               type="button"
-              width="w-[150px]"
-              height="h-[40px]"
-              bgColor="bg-[#D3D3D3]"
-              textColor="text-white"
+              width="w-[250px]"
+              height="h-[45px]"
+              bgColor="bg-white"
+              textColor="text-[#D3D3D3]"
               borderColor="border-[#D3D3D3]"
+              fontSize="text-base"
               onClick={cancelClick}
             >
               뒤로가기
             </Button>
             <Button
               type="submit"
-              width="w-[150px]"
-              height="h-[40px]"
+              width="w-[250px]"
+              height="h-[45px]"
               bgColor="bg-[#1B304A]"
               textColor="text-white"
+              fontSize="text-base"
               marginLeft="ml-[10px]"
             >
               등록하기

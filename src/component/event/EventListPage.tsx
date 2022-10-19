@@ -35,7 +35,7 @@ function EventListPage() {
             return (
               <li className="py-[.5rem]" key={event.eventId} style={{ borderBottom: '1px solid #C2C9D1' }}>
                 <input className="" type="checkbox" name={event.eventTitle} value={event.eventId} />
-                <span className="ml-[2rem]">Lenssis</span>
+                <span className="ml-[3rem]">{event.eventId}</span>
                 <Link to={`/eventlist/${event.eventId}`} className="ml-[4rem]">
                   {event.eventTitle}
                 </Link>
