@@ -39,7 +39,7 @@ function OrderDetailPage() {
       <table className="w-full">
         <tbody>
           <tr>
-            <td className="w-[20%] bg-[#DADADA] p-3 pl-[1rem]" style={{ border: '1px solid #C2C9D1' }}>
+            <td className="w-[20%] bg-[#F4F4F4] p-3 pl-[1rem]" style={{ border: '1px solid #DADADA' }}>
               상품주문번호
             </td>
             <td className="p-3 pl-[1rem]" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>

@@ -44,19 +44,33 @@ function NoticeDetailPage() {
       >
         {noticeDetail.data && Parser(noticeDetail.data[0].description)}
       </div>
-      <div className="mb-[5rem]  flex justify-center">
+      <div className="mb-[5rem]  flex justify-between">
         <Button
           type="button"
-          width="w-[80px]"
+          width="w-[150px]"
           height="h-[40px]"
-          bgColor="bg-white"
-          textColor="text-[black]"
-          borderColor="border-[#C2C9D1]"
+          bgColor="bg-[#D3D3D3]"
+          textColor="text-white"
+          borderColor="border-[#D3D3D3]"
           display="block"
           marginLeft="ml-[10px]"
+          fontSize="text-base"
           onClick={cancelClick}
         >
-          닫기
+          목록
+        </Button>
+        <Button
+          type="button"
+          width="w-[150px]"
+          height="h-[40px]"
+          bgColor="bg-[#1B304A]"
+          textColor="text-white"
+          borderColor="border-[#1B304A]"
+          display="block"
+          marginLeft="ml-[10px]"
+          fontSize="text-base"
+        >
+          수정
         </Button>
       </div>
     </ContentBox>

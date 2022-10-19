@@ -19,19 +19,19 @@ function NoticeListPage() {
 
   const category = (status: number) => {
     if (status === 0) {
-      return '필독 공지사항'
+      return <span className="text-[#FFDF5D]">필독</span>
     } else if (status === 1) {
-      return '배송관련'
+      return <span className="text-[#64eb34]">배송관련</span>
     } else if (status === 2) {
-      return '취소 / 교환 / 반품'
+      return <span className="text-[#EC6162]">취소/교환/반품</span>
     } else if (status === 3) {
-      return '결제 관련'
+      return <span className="text-[#A4C8E1]">결제</span>
     } else if (status === 4) {
-      return '제품 도수'
+      return <span className="text-[#a534eb]">제품 도수</span>
     } else if (status === 5) {
-      return '쿠폰 / 회원정보'
+      return <span className="text-[#FFDF5D]">쿠폰/회원정보</span>
     } else {
-      return '기타'
+      return <span>기타</span>
     }
   }
 

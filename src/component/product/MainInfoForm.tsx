@@ -108,7 +108,7 @@ function MainInfoForm({ mainInformHandler, initialValue }: Props) {
 
   return (
     <>
-      <div>
+      <div className="ml-[2rem]">
         <Input
           label="상품명"
           id="product_title"
@@ -122,6 +122,7 @@ function MainInfoForm({ mainInformHandler, initialValue }: Props) {
           id="price"
           inputWidth="w-full"
           value={price}
+          placeholder="상품명을 입력하세요."
           onChange={priceValueChangeHandler}
           type="number"
         />
@@ -151,26 +152,7 @@ function MainInfoForm({ mainInformHandler, initialValue }: Props) {
         />
       </div>
 
-      <div className="flex justify-between">
-        <SettingSwitcher
-          title="추천상품"
-          id="recommend"
-          onChange={recommendValueChangeHandler}
-          justifyCenter="justify-center"
-          width="w-[50%]"
-          initialValue={recommend}
-        />
-        <SettingSwitcher
-          title="상품보이기"
-          id="mainExposure"
-          onChange={mainExposureValueChangeHandler}
-          justifyCenter="justify-center"
-          width="w-[50%]"
-          initialValue={exposure}
-        />
-      </div>
-
-      <div className="ml-[108px] mb-[2rem] flex justify-between">
+      <div className="my-[2rem] ml-[108px] flex justify-between">
         <div className="h-[250px] w-[45%] rounded-xl bg-[#F4F4F4] p-2">
           {seriesList.map((serieses) => (
             <div key={serieses}>
@@ -217,6 +199,25 @@ function MainInfoForm({ mainInformHandler, initialValue }: Props) {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="flex justify-between">
+        <SettingSwitcher
+          title="추천상품"
+          id="recommend"
+          onChange={recommendValueChangeHandler}
+          justifyCenter="justify-center"
+          width="w-[50%]"
+          initialValue={recommend}
+        />
+        <SettingSwitcher
+          title="상품보이기"
+          id="mainExposure"
+          onChange={mainExposureValueChangeHandler}
+          justifyCenter="justify-center"
+          width="w-[50%]"
+          initialValue={exposure}
+        />
       </div>
     </>
   )

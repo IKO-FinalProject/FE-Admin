@@ -35,22 +35,36 @@ function EventDetailPage() {
       <p className="flex h-[50px] items-center" style={{ borderBottom: '1px solid #7A7A7A' }}>
         <span className="w-[20%] text-center">작성자</span> <span> 렌시스 관리자</span>
       </p>
-      <div className="mt-[4rem] flex justify-center">
+      <div className="mt-[4rem] flex justify-center pb-[2rem]" style={{ borderBottom: '1px solid #7A7A7A' }}>
         <img className="w-[70%]  " src={eventDetail.data && eventDetail.data[0].imageUrl} alt="eventimage" />
       </div>
       <div className="mb-[5rem] mt-[2rem] flex justify-center">
         <Button
           type="button"
-          width="w-[80px]"
+          width="w-[150px]"
           height="h-[40px]"
-          bgColor="bg-white"
-          textColor="text-[black]"
-          borderColor="border-[#C2C9D1]"
+          bgColor="bg-[#D3D3D3]"
+          textColor="text-white"
+          borderColor="border-[#D3D3D3]"
           display="block"
           marginLeft="ml-[10px]"
+          fontSize="text-base"
           onClick={cancelClick}
         >
-          닫기
+          목록
+        </Button>
+        <Button
+          type="button"
+          width="w-[150px]"
+          height="h-[40px]"
+          bgColor="bg-[#1B304A]"
+          textColor="text-white"
+          borderColor="border-[#1B304A]"
+          display="block"
+          marginLeft="ml-[10px]"
+          fontSize="text-base"
+        >
+          수정
         </Button>
       </div>
     </ContentBox>
