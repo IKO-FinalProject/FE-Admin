@@ -2,7 +2,7 @@
 
 #### 배포주소 : https://lenssis-admin-page.vercel.app/
 #### notion : https://quickest-asterisk-75d.notion.site/BE-FE2-UXUI3-_1-e1ca7b5e27354b08a033573299dde83d
-#### figma : https://www.figma.com/file/N2eTli2BXz3o4HjuReWbCz/%EC%BB%AC%EB%9F%AC%EB%A0%8C%EC%A1%B0-2?node-id=573%3A26444
+#### figma : https://www.figma.com/file/SL2HjUJ0aujggFSfo9biR9/%EC%BB%AC%EB%9F%AC%EB%A0%8C%EC%A1%B0-3?node-id=2039%3A77754
 
 <br /><br />
 
