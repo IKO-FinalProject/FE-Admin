@@ -9,14 +9,11 @@ type itemType = {
   feature: string[]
 }
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
-import Headliner from '../ui/HeadLiner'
 import { useNavigate } from 'react-router-dom'
 import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
-
-const { VITE_API } = import.meta.env
 
 async function getProducts() {
   const response = await fetch(`https://iko-lenssis.click/admin/allProductInfo`)

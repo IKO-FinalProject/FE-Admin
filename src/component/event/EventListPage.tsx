@@ -1,7 +1,7 @@
 import ContentBox from '../ui/ContentBox'
 import Headliner from '../ui/HeadLiner'
 import { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { AiOutlineSearch } from 'react-icons/ai'
 import Button from '../ui/Button'
 import { useNavigate, Link } from 'react-router-dom'
@@ -13,7 +13,7 @@ async function getEvents() {
 
 function EventListPage() {
   const [currentPage, setCurrentPage] = useState(1)
-
+  const [checkItems, setCheckItems]: any = useState([])
   const fallback: string[] = []
   const { data: events = fallback } = useQuery(['eventsList', currentPage], getEvents)
 
@@ -21,6 +21,35 @@ function EventListPage() {
 
   const addeventClick = () => {
     navigate('/addevent')
+  }
+
+  const queryClient = useQueryClient()
+
+  async function deleteEvents(id: number) {
+    const response = await fetch(`https://iko-lenssis.click/admin/deleteEvent?eventId=${id}`, {
+      method: 'DELETE'
+    })
+    return response.json()
+  }
+
+  const { mutate } = useMutation((id: number) => deleteEvents(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['eventsList', currentPage])
+    }
+  })
+
+  const deleteEventsHandler = () => {
+    checkItems.map((id: number) => {
+      mutate(id)
+    })
+  }
+
+  const checkboxHandler = (e: { target: { checked: any; value: any } }) => {
+    if (e.target.checked) {
+      setCheckItems([...checkItems, e.target.value])
+    } else {
+      setCheckItems(checkItems.filter((el: any) => el !== e.target.value))
+    }
   }
 
   return (
@@ -34,7 +63,13 @@ function EventListPage() {
           events.data.eventMainList.map((event: any) => {
             return (
               <li className="py-[.5rem]" key={event.eventId} style={{ borderBottom: '1px solid #C2C9D1' }}>
-                <input className="" type="checkbox" name={event.eventTitle} value={event.eventId} />
+                <input
+                  className=""
+                  type="checkbox"
+                  name={event.eventTitle}
+                  value={event.eventId}
+                  onChange={checkboxHandler}
+                />
                 <span className="ml-[3rem]">{event.eventId}</span>
                 <Link to={`/eventlist/${event.eventId}`} className="ml-[4rem]">
                   {event.eventTitle}
@@ -59,6 +94,7 @@ function EventListPage() {
             bgColor="bg-white"
             textColor="text-[#C2C9D1]"
             borderColor="border-[#C2C9D1]"
+            onClick={deleteEventsHandler}
           >
             삭제
           </Button>

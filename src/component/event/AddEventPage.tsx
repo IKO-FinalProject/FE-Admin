@@ -148,7 +148,7 @@ function AddEventPage() {
       topFixed
     }
 
-    awsUpload()
+    // awsUpload()
     mutate(submitValue)
   }
 
