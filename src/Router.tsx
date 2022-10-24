@@ -2,7 +2,6 @@ import { Routes, Route, BrowserRouter, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import MainWrapper from './component/layout/MainWrapper'
-import Login from './component/app/Login'
 import MainPage from './component/app/MainPage'
 import ProductListPage from './component/product/ProductListPage'
 import EditProductPage from './component/product/EditProductPage'
@@ -32,7 +31,6 @@ const Router = () => {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/login" element={<Login />} />
           <Route element={<MainWrapper />}>
             <Route path="/" element={<MainPage />} />
             <Route path="/productlist" element={<ProductListPage />} />

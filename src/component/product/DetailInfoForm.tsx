@@ -2,11 +2,8 @@ import SettingSwitcher from './SettingSwitcher'
 import PeriodSwitcher from './PeriodSwitcher'
 import Input from '../ui/Input'
 import ImageUploader from '../ui/ImageUploaer'
-
 import { useState, useEffect } from 'react'
-
 import { DetailInfoFormValue } from './types'
-
 const { VITE_BUCKET_NAME } = import.meta.env
 
 type Props = {

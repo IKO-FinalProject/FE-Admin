@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import { s3Config } from '../ui/aws'
 
 import ContentBox from '../ui/ContentBox'
@@ -10,7 +10,7 @@ import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
 import SettingSwitcher from '../product/SettingSwitcher'
 
-const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
+const { VITE_BUCKET_NAME } = import.meta.env
 
 function AddEventPage() {
   const [title, setTitle] = useState('')
@@ -48,26 +48,6 @@ function AddEventPage() {
   })
 
   //AWS API
-
-  // const [progress, setProgress] = useState(0)
-
-  // const uploadFile = (file: any) => {
-  //   const params = {
-  //     ACL: 'public-read',
-  //     Body: file,
-  //     Bucket: VITE_BUCKET_NAME,
-  //     Key: file.name
-  //   }
-
-  //   myBucket
-  //     .putObject(params)
-  //     .on('httpUploadProgress', (evt) => {
-  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
-  //     })
-  //     .send((err) => {
-  //       if (err) console.log(err)
-  //     })
-  // }
 
   const uploadFile = async (file: any) => {
     const { reactS3Client } = require('react-aws-s3-typescript')

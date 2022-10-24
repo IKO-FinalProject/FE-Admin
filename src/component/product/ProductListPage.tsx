@@ -21,13 +21,12 @@ async function getProducts() {
 }
 
 function ProductListPage() {
-  const [currentPage, setCurrentPage] = useState(1)
   const [checkItems, setCheckItems]: any = useState([])
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
   const fallback: string[] = []
-  const { data: product = fallback } = useQuery(['productsList', currentPage], getProducts)
+  const { data: product = fallback } = useQuery(['productsList'], getProducts)
 
   async function deleteItems(id: number) {
     const response = await fetch(`https://iko-lenssis.click/admin/deleteProduct?productId=${id}`, {
@@ -38,7 +37,7 @@ function ProductListPage() {
 
   const { mutate } = useMutation((id: number) => deleteItems(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['productsList', currentPage])
+      queryClient.invalidateQueries(['productsList'])
     }
   })
 

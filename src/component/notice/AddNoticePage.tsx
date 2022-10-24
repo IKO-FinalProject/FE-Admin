@@ -1,5 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-
+import { useMutation } from 'react-query'
 import { useRef, useState } from 'react'
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
@@ -7,8 +6,6 @@ import QuillEditor from './QuillEditor'
 import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
 import { useNavigate } from 'react-router-dom'
-
-const { VITE_API } = import.meta.env
 
 function AddNoticePage() {
   const [categoryValue, setCategoryValue] = useState(0)

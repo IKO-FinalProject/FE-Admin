@@ -1,6 +1,6 @@
 import ContentBox from '../ui/ContentBox'
 import Headliner from '../ui/HeadLiner'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { AiOutlineSearch } from 'react-icons/ai'
 import Button from '../ui/Button'
@@ -12,10 +12,9 @@ async function getEvents() {
 }
 
 function EventListPage() {
-  const [currentPage, setCurrentPage] = useState(1)
   const [checkItems, setCheckItems]: any = useState([])
   const fallback: string[] = []
-  const { data: events = fallback } = useQuery(['eventsList', currentPage], getEvents)
+  const { data: events = fallback } = useQuery(['eventsList'], getEvents)
 
   const navigate = useNavigate()
 
@@ -34,7 +33,7 @@ function EventListPage() {
 
   const { mutate } = useMutation((id: number) => deleteEvents(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['eventsList', currentPage])
+      queryClient.invalidateQueries(['eventsList'])
     }
   })
 

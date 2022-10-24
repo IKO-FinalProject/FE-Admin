@@ -47,5 +47,3 @@ const Input = ({
 }
 
 export default Input
-
-//https://itchallenger.tistory.com/266

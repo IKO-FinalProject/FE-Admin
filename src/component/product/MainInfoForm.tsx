@@ -35,10 +35,6 @@ function MainInfoForm({ mainInformHandler, initialValue }: Props) {
 
   //메인정보핸들러
   const productTitleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // mainInformHandler(prev => ({
-    //   ...prev,
-    //   productTitle: e.target.value,
-    // }))
     setProductName(e.target.value)
   }
 
