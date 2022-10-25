@@ -1,4 +1,14 @@
-const SettingSwitcher = ({ title, id, onChange, width, titleHidden, justifyCenter, initialValue }: any) => {
+type Props = {
+  title: string
+  id: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  width: string
+  titleHidden?: string
+  justifyCenter: string
+  initialValue: number
+}
+
+const SettingSwitcher = ({ title, id, onChange, width, titleHidden, justifyCenter, initialValue }: Props) => {
   return (
     <div className={`my-4 mb-[2rem] flex ${width}  ${justifyCenter}`}>
       <span className={`mr-[15px] flex w-[100px] items-center text-sm text-[#1B304A] ${titleHidden}`}>

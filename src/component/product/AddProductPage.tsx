@@ -4,10 +4,10 @@ import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
 import MainInfoForm from './MainInfoForm'
 import DetailInfoForm from './DetailInfoForm'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SetStateAction } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import type { MainInfoFormValue } from './MainInfoForm'
+import { MainInfoFormValue, DetailInfoFormValue, ProductSubmitValue } from './ProductTypes'
 
 function AddProductPage() {
   const [optionList, setOptionList] = useState([])
@@ -28,7 +28,7 @@ function AddProductPage() {
   const navigate = useNavigate()
 
   //ADDPRODUCT API
-  async function addProduct(submitValue: any) {
+  async function addProduct(submitValue: ProductSubmitValue) {
     const response = await fetch(`https://iko-lenssis.click/admin/insertProduct`, {
       method: 'POST',
       headers: {
@@ -38,14 +38,14 @@ function AddProductPage() {
     })
     return response.json()
   }
-  const { mutate } = useMutation((submitValue: any) => addProduct(submitValue), {
+  const { mutate } = useMutation((submitValue: ProductSubmitValue) => addProduct(submitValue), {
     onSuccess: () => {
       navigate('/productlist')
     }
   })
 
   //AWSAPI
-  const uploadFile = async (file: any) => {
+  const uploadFile = async (file: File) => {
     const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
@@ -62,7 +62,7 @@ function AddProductPage() {
   }
 
   //STATE HANDLER
-  const mainInformHandler = (mainInform: any) => {
+  const mainInformHandler = (mainInform: SetStateAction<MainInfoFormValue>) => {
     setMainInform(mainInform)
   }
 

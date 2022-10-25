@@ -1,6 +1,15 @@
+type eventSubmitType = {
+  title: string
+  description: string
+  startTime: string
+  endTime: string
+  topFixed: number
+  mainImageUrl: string
+  explainImageUrl: string
+}
+
 import { useMutation } from 'react-query'
 import { s3Config } from '../ui/aws'
-
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
@@ -30,7 +39,7 @@ function AddEventPage() {
 
   //ADDEVENT API
 
-  async function addEvent(submitValue: any) {
+  async function addEvent(submitValue: eventSubmitType) {
     const response = await fetch(`https://iko-lenssis.click/admin/insertEvent`, {
       method: 'POST',
       headers: {
@@ -41,7 +50,7 @@ function AddEventPage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue), {
+  const { mutate } = useMutation((submitValue: eventSubmitType) => addEvent(submitValue), {
     onSuccess: () => {
       navigate('/eventlist')
     }
@@ -49,7 +58,7 @@ function AddEventPage() {
 
   //AWS API
 
-  const uploadFile = async (file: any) => {
+  const uploadFile = async (file: File) => {
     const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
@@ -85,6 +94,7 @@ function AddEventPage() {
 
   const mainImageChangeHandler = (image: any) => {
     setMainImage(image)
+    console.log(image)
     setMainImageUrl(`https://${VITE_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
     setMainImageData(image[0].file)
   }

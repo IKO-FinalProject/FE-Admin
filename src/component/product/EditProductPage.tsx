@@ -6,7 +6,7 @@ import DetailInfoForm from './DetailInfoForm'
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from 'react-query'
 import { s3Config } from '../ui/aws'
-import type { MainInfoFormValue } from './MainInfoForm'
+import { MainInfoFormValue, EditProductSubmitValue } from './ProductTypes'
 
 function EditProductPage() {
   const [optionList, setOptionList] = useState([])
@@ -37,7 +37,7 @@ function EditProductPage() {
   const fallback: string[] = []
   const { data: productDetail = fallback } = useQuery(['productDetail'], getProductDetails)
 
-  async function updateProduct(submitValue: any) {
+  async function updateProduct(submitValue: EditProductSubmitValue) {
     const response = await fetch(`https://iko-lenssis.click/admin/updateProduct`, {
       method: 'PUT',
       headers: {
@@ -47,7 +47,7 @@ function EditProductPage() {
     })
     return response.json()
   }
-  const { mutate } = useMutation((submitValue: any) => updateProduct(submitValue), {
+  const { mutate } = useMutation((submitValue: EditProductSubmitValue) => updateProduct(submitValue), {
     onSuccess: () => {
       navigate('/productlist')
     }
@@ -55,7 +55,7 @@ function EditProductPage() {
 
   //AWSAPI
 
-  const uploadFile = async (file: any) => {
+  const uploadFile = async (file: File) => {
     const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
@@ -72,7 +72,7 @@ function EditProductPage() {
   }
 
   //STATE HANDLER
-  const mainInformHandler = (mainInform: any) => {
+  const mainInformHandler = (mainInform: React.SetStateAction<MainInfoFormValue>) => {
     setMainInform(mainInform)
   }
 

@@ -1,19 +1,9 @@
-type itemType = {
-  productId: number
-  productName: string
-  price: number
-  discount: number
-  diameter: number
-  manufacturer: string
-  series: string
-  feature: string[]
-}
-
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
+import { ProductItemType } from './ProductTypes'
 
 async function getProducts() {
   const response = await fetch(`https://iko-lenssis.click/admin/allProductInfo`)
@@ -21,7 +11,7 @@ async function getProducts() {
 }
 
 function ProductListPage() {
-  const [checkItems, setCheckItems]: any = useState([])
+  const [checkItems, setCheckItems] = useState<number[]>([])
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
@@ -47,11 +37,11 @@ function ProductListPage() {
     })
   }
 
-  const checkboxHandler = (e: { target: { checked: any; value: any } }) => {
+  const checkboxHandler = (e: { target: { checked: boolean; value: string } }) => {
     if (e.target.checked) {
-      setCheckItems([...checkItems, e.target.value])
+      setCheckItems([...checkItems, Number(e.target.value)])
     } else {
-      setCheckItems(checkItems.filter((el: any) => el !== e.target.value))
+      setCheckItems(checkItems.filter((el) => el !== Number(e.target.value)))
     }
   }
 
@@ -133,7 +123,7 @@ function ProductListPage() {
           </thead>
           <tbody>
             {product.data &&
-              product.data.map((item: itemType) => {
+              product.data.map((item: ProductItemType) => {
                 return (
                   <tr className=" w-full" key={item.productId}>
                     <td

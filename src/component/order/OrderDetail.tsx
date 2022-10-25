@@ -2,11 +2,13 @@ import ContentBox from '../ui/ContentBox'
 import { useLocation, useParams, useNavigate } from 'react-router-dom'
 import Button from '../ui/Button'
 import { useQuery } from 'react-query'
+import { mainOrderInfoType, orderDetailInfoType, orderDetailsOptionInfoType } from './OrderTypes'
 
 function OrderDetailPage() {
   const location = useLocation()
   const navigate = useNavigate()
   const mainOrderInfo: any = location.state
+
   const params = useParams()
 
   async function getOrdersDetails() {
@@ -56,12 +58,12 @@ function OrderDetailPage() {
             <td className="p-3 align-middle" colSpan={3} style={{ border: '1px solid #C2C9D1' }}>
               <div>
                 {orderDetail.data &&
-                  orderDetail.data.map((el: any) => {
+                  orderDetail.data.map((el: orderDetailInfoType) => {
                     return (
                       <ul key={el.productId}>
                         <div className="mb-[.5rem] ml-[1rem]">{`- ${el.productName} / ${el.series} / ${el.diameter}`}</div>
                         <div className="mb-[1rem] ml-[2rem]">
-                          {el.detailsInfo.map((option: any, index: number) => {
+                          {el.detailsInfo.map((option: orderDetailsOptionInfoType, index: number) => {
                             return (
                               <li className="text-sm" key={option.productDetailsId}>{`옵션 ${index + 1}. ${
                                 option.color

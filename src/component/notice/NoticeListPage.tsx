@@ -4,7 +4,6 @@ import Button from '../ui/Button'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { useQuery } from 'react-query'
 import { useNavigate, Link } from 'react-router-dom'
-import { useState } from 'react'
 
 async function getNotices() {
   const response = await fetch(`https://iko-lenssis.click/admin/boardMain`)

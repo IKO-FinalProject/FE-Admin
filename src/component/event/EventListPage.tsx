@@ -1,3 +1,10 @@
+type eventType = {
+  eventId: number
+  imageUrl: string
+  eventTitle: string
+  topFixed: number
+}
+
 import ContentBox from '../ui/ContentBox'
 import Headliner from '../ui/HeadLiner'
 import { useState } from 'react'
@@ -12,7 +19,7 @@ async function getEvents() {
 }
 
 function EventListPage() {
-  const [checkItems, setCheckItems]: any = useState([])
+  const [checkItems, setCheckItems] = useState<number[]>([])
   const fallback: string[] = []
   const { data: events = fallback } = useQuery(['eventsList'], getEvents)
 
@@ -43,11 +50,11 @@ function EventListPage() {
     })
   }
 
-  const checkboxHandler = (e: { target: { checked: any; value: any } }) => {
+  const checkboxHandler = (e: { target: { checked: boolean; value: string } }) => {
     if (e.target.checked) {
-      setCheckItems([...checkItems, e.target.value])
+      setCheckItems([...checkItems, Number(e.target.value)])
     } else {
-      setCheckItems(checkItems.filter((el: any) => el !== e.target.value))
+      setCheckItems(checkItems.filter((el) => el !== Number(e.target.value)))
     }
   }
 
@@ -59,7 +66,7 @@ function EventListPage() {
           최근 날짜순
         </li>
         {events.data &&
-          events.data.eventMainList.map((event: any) => {
+          events.data.eventMainList.map((event: eventType) => {
             return (
               <li className="py-[.5rem]" key={event.eventId} style={{ borderBottom: '1px solid #C2C9D1' }}>
                 <input

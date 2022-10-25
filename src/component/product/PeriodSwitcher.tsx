@@ -1,4 +1,8 @@
-const PeriodSwitcher = ({ onChange }: any) => {
+type Props = {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const PeriodSwitcher = ({ onChange }: Props) => {
   return (
     <div className={`mb-[2rem] flex w-[50%] items-center justify-center`}>
       <span className="mr-[15px] flex w-[100px] items-center text-sm text-[#1B304A]"> &#183; 기간 </span>

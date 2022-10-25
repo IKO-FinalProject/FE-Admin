@@ -1,14 +1,15 @@
-import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
-import { memo, useMemo } from 'react'
-
 type QuillEditorProps = {
   quillRef: string
   htmlContent: string
   setHtmlContent: string
 }
 
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
+import { memo, useMemo } from 'react'
+
 const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent }: any) => {
+  console.log(quillRef)
   const modules = useMemo(
     () => ({
       toolbar: {

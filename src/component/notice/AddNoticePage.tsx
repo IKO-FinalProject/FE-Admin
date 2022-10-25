@@ -1,3 +1,9 @@
+type noticeSubmitType = {
+  boardContent: string
+  boardTitle: string
+  boardType: number
+}
+
 import { useMutation } from 'react-query'
 import { useRef, useState } from 'react'
 import ContentBox from '../ui/ContentBox'
@@ -15,7 +21,7 @@ function AddNoticePage() {
 
   //ADDEVENT API
 
-  async function addNotice(submitValue: any) {
+  async function addNotice(submitValue: noticeSubmitType) {
     const response = await fetch(`https://iko-lenssis.click/admin/insertBoard`, {
       method: 'POST',
       headers: {
@@ -26,7 +32,7 @@ function AddNoticePage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => addNotice(submitValue), {
+  const { mutate } = useMutation((submitValue: noticeSubmitType) => addNotice(submitValue), {
     onSuccess: () => {
       navigate('/noticelist')
     }
