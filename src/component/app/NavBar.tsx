@@ -143,8 +143,7 @@ function NavBar() {
           <DropDownMenu
             menuList={[
               { title: '이벤트 리스트', link: '/eventlist' },
-              { title: '이벤트 작성', link: '/addevent' },
-              { title: '이벤트 수정', link: '/' }
+              { title: '이벤트 작성', link: '/addevent' }
             ]}
           />
         )}
@@ -171,8 +170,7 @@ function NavBar() {
           <DropDownMenu
             menuList={[
               { title: '공지사항 리스트', link: '/noticelist' },
-              { title: '공지사항 작성', link: '/addnotice' },
-              { title: '공지사항 상세', link: '/noticedetail' }
+              { title: '공지사항 작성', link: '/addnotice' }
             ]}
           />
         )}

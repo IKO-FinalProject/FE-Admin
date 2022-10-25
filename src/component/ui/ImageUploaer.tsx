@@ -34,7 +34,3 @@ const ImageUploader = ({ value, onChange, multiple }: any) => {
 }
 
 export default ImageUploader
-
-//div-> ul  -> li
-
-//alt

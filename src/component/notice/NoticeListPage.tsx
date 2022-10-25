@@ -4,7 +4,6 @@ import Button from '../ui/Button'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { useQuery } from 'react-query'
 import { useNavigate, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 
 async function getNotices() {
   const response = await fetch(`https://iko-lenssis.click/admin/boardMain`)
@@ -12,10 +11,8 @@ async function getNotices() {
 }
 
 function NoticeListPage() {
-  const [currentPage, setCurrentPage] = useState(1)
-
   const fallback: string[] = []
-  const { data: notices = fallback } = useQuery(['noticesList', currentPage], getNotices)
+  const { data: notices = fallback } = useQuery(['noticesList'], getNotices)
 
   const category = (status: number) => {
     if (status === 0) {

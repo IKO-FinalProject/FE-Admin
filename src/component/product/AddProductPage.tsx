@@ -1,15 +1,13 @@
 import { useMutation } from 'react-query'
 import { s3Config } from '../ui/aws'
-
 import ContentBox from '../ui/ContentBox'
 import Button from '../ui/Button'
-import Headliner from '../ui/HeadLiner'
 import MainInfoForm from './MainInfoForm'
 import DetailInfoForm from './DetailInfoForm'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, SetStateAction } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import type { MainInfoFormValue } from './MainInfoForm'
+import { MainInfoFormValue, DetailInfoFormValue, ProductSubmitValue } from './ProductTypes'
 
 function AddProductPage() {
   const [optionList, setOptionList] = useState([])
@@ -30,7 +28,7 @@ function AddProductPage() {
   const navigate = useNavigate()
 
   //ADDPRODUCT API
-  async function addProduct(submitValue: any) {
+  async function addProduct(submitValue: ProductSubmitValue) {
     const response = await fetch(`https://iko-lenssis.click/admin/insertProduct`, {
       method: 'POST',
       headers: {
@@ -40,34 +38,14 @@ function AddProductPage() {
     })
     return response.json()
   }
-  const { mutate } = useMutation((submitValue: any) => addProduct(submitValue), {
+  const { mutate } = useMutation((submitValue: ProductSubmitValue) => addProduct(submitValue), {
     onSuccess: () => {
       navigate('/productlist')
     }
   })
 
   //AWSAPI
-  // const [progress, setProgress] = useState(0)
-
-  // const uploadFile = (file: any) => {
-  //   const params = {
-  //     ACL: 'public-read',
-  //     Body: file,
-  //     Bucket: VITE_BUCKET_NAME,
-  //     Key: file.name
-  //   }
-
-  //   myBucket
-  //     .putObject(params)
-  //     .on('httpUploadProgress', (evt) => {
-  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
-  //     })
-  //     .send((err) => {
-  //       if (err) console.log(err)
-  //     })
-  // }
-
-  const uploadFile = async (file: any) => {
+  const uploadFile = async (file: File) => {
     const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
@@ -84,7 +62,7 @@ function AddProductPage() {
   }
 
   //STATE HANDLER
-  const mainInformHandler = (mainInform: any) => {
+  const mainInformHandler = (mainInform: SetStateAction<MainInfoFormValue>) => {
     setMainInform(mainInform)
   }
 

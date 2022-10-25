@@ -5,7 +5,11 @@ type menuList = {
   link: string
 }
 
-function DropDownMenu({ menuList }: any) {
+type Props = {
+  menuList: menuList[]
+}
+
+function DropDownMenu({ menuList }: Props) {
   return (
     <ul className="mt-[10px] flex h-[145px] w-[185px] flex-col justify-around rounded-md bg-[#1B304A] p-[10px]">
       {menuList.map((menu: menuList) => (

@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import ContentBox from '../ui/ContentBox'
-import Headliner from '../ui/HeadLiner'
 import Button from '../ui/Button'
 import { useQuery } from 'react-query'
 

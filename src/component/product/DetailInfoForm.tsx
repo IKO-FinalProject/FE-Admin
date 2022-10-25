@@ -2,17 +2,14 @@ import SettingSwitcher from './SettingSwitcher'
 import PeriodSwitcher from './PeriodSwitcher'
 import Input from '../ui/Input'
 import ImageUploader from '../ui/ImageUploaer'
-
 import { useState, useEffect } from 'react'
-
-import { DetailInfoFormValue } from './types'
-
+import { DetailInfoFormValue } from './ProductTypes'
 const { VITE_BUCKET_NAME } = import.meta.env
 
 type Props = {
   optionListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
   allImageDataListHandler: React.Dispatch<React.SetStateAction<DetailInfoFormValue>>
-  initialValue?: any
+  initialValue?: DetailInfoFormValue
 }
 
 function DetailInfoForm({ optionListHandler, allImageDataListHandler, initialValue }: Props) {
@@ -167,9 +164,11 @@ function DetailInfoForm({ optionListHandler, allImageDataListHandler, initialVal
   }
 
   const deleteOption = (index: number) => {
-    setOptionList(optionList.filter((option: object[], optionIndex: number) => optionIndex !== index))
+    setOptionList(
+      optionList.filter((option: DetailInfoFormValue[], optionIndex: number) => optionIndex !== index)
+    )
     setAllImageDataList(
-      allImageDataList.filter((option: object[], optionIndex: number) => optionIndex !== index)
+      allImageDataList.filter((option: DetailInfoFormValue[], optionIndex: number) => optionIndex !== index)
     )
   }
 

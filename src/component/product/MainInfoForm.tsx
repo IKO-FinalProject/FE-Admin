@@ -1,22 +1,11 @@
 import Input from '../ui/Input'
 import SettingSwitcher from './SettingSwitcher'
 import { useState, useEffect } from 'react'
-
-export type MainInfoFormValue = {
-  productName: string
-  price: number
-  discount: number
-  diameter: number
-  manufacturer: string
-  recommend: number
-  exposure: number
-  series: string
-  feature: string[]
-}
+import { MainInfoFormValue } from './ProductTypes'
 
 type Props = {
   mainInformHandler: React.Dispatch<React.SetStateAction<MainInfoFormValue>>
-  initialValue?: any
+  initialValue?: MainInfoFormValue
 }
 
 function MainInfoForm({ mainInformHandler, initialValue }: Props) {
@@ -35,10 +24,6 @@ function MainInfoForm({ mainInformHandler, initialValue }: Props) {
 
   //메인정보핸들러
   const productTitleValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // mainInformHandler(prev => ({
-    //   ...prev,
-    //   productTitle: e.target.value,
-    // }))
     setProductName(e.target.value)
   }
 

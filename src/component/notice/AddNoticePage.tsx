@@ -1,5 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+type noticeSubmitType = {
+  boardContent: string
+  boardTitle: string
+  boardType: number
+}
 
+import { useMutation } from 'react-query'
 import { useRef, useState } from 'react'
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
@@ -7,8 +12,6 @@ import QuillEditor from './QuillEditor'
 import Button from '../ui/Button'
 import Headliner from '../ui/HeadLiner'
 import { useNavigate } from 'react-router-dom'
-
-const { VITE_API } = import.meta.env
 
 function AddNoticePage() {
   const [categoryValue, setCategoryValue] = useState(0)
@@ -18,7 +21,7 @@ function AddNoticePage() {
 
   //ADDEVENT API
 
-  async function addNotice(submitValue: any) {
+  async function addNotice(submitValue: noticeSubmitType) {
     const response = await fetch(`https://iko-lenssis.click/admin/insertBoard`, {
       method: 'POST',
       headers: {
@@ -29,7 +32,7 @@ function AddNoticePage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => addNotice(submitValue), {
+  const { mutate } = useMutation((submitValue: noticeSubmitType) => addNotice(submitValue), {
     onSuccess: () => {
       navigate('/noticelist')
     }

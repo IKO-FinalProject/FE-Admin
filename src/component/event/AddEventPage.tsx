@@ -1,6 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { s3Config } from '../ui/aws'
+type eventSubmitType = {
+  title: string
+  description: string
+  startTime: string
+  endTime: string
+  topFixed: number
+  mainImageUrl: string
+  explainImageUrl: string
+}
 
+import { useMutation } from 'react-query'
+import { s3Config } from '../ui/aws'
 import ContentBox from '../ui/ContentBox'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
@@ -10,7 +19,7 @@ import ImageUploader from '../ui/ImageUploaer'
 import { useNavigate } from 'react-router-dom'
 import SettingSwitcher from '../product/SettingSwitcher'
 
-const { VITE_BUCKET_NAME, VITE_API } = import.meta.env
+const { VITE_BUCKET_NAME } = import.meta.env
 
 function AddEventPage() {
   const [title, setTitle] = useState('')
@@ -30,7 +39,7 @@ function AddEventPage() {
 
   //ADDEVENT API
 
-  async function addEvent(submitValue: any) {
+  async function addEvent(submitValue: eventSubmitType) {
     const response = await fetch(`https://iko-lenssis.click/admin/insertEvent`, {
       method: 'POST',
       headers: {
@@ -41,7 +50,7 @@ function AddEventPage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => addEvent(submitValue), {
+  const { mutate } = useMutation((submitValue: eventSubmitType) => addEvent(submitValue), {
     onSuccess: () => {
       navigate('/eventlist')
     }
@@ -49,27 +58,7 @@ function AddEventPage() {
 
   //AWS API
 
-  // const [progress, setProgress] = useState(0)
-
-  // const uploadFile = (file: any) => {
-  //   const params = {
-  //     ACL: 'public-read',
-  //     Body: file,
-  //     Bucket: VITE_BUCKET_NAME,
-  //     Key: file.name
-  //   }
-
-  //   myBucket
-  //     .putObject(params)
-  //     .on('httpUploadProgress', (evt) => {
-  //       setProgress(Math.round((evt.loaded / evt.total) * 100))
-  //     })
-  //     .send((err) => {
-  //       if (err) console.log(err)
-  //     })
-  // }
-
-  const uploadFile = async (file: any) => {
+  const uploadFile = async (file: File) => {
     const { reactS3Client } = require('react-aws-s3-typescript')
     const s3 = new reactS3Client(s3Config)
     try {
@@ -105,6 +94,7 @@ function AddEventPage() {
 
   const mainImageChangeHandler = (image: any) => {
     setMainImage(image)
+    console.log(image)
     setMainImageUrl(`https://${VITE_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/${image[0].file.name}`)
     setMainImageData(image[0].file)
   }
@@ -148,7 +138,7 @@ function AddEventPage() {
       topFixed
     }
 
-    awsUpload()
+    // awsUpload()
     mutate(submitValue)
   }
 

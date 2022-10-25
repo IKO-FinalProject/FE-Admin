@@ -4,28 +4,27 @@ import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { MdRefresh } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-
+import { statusSubmitType } from './OrderTypes'
 async function getOrders() {
   const response = await fetch(`https://iko-lenssis.click/admin/allOrderInfo`)
   return response.json()
 }
 
 function OrderListPage() {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [checkItems, setCheckItems]: any = useState([])
+  const [checkItems, setCheckItems] = useState<number[]>([])
   const queryClient = useQueryClient()
   const fallback: string[] = []
-  const { data: orderList = fallback } = useQuery(['orderList', currentPage], getOrders)
+  const { data: orderList = fallback } = useQuery(['orderList'], getOrders)
 
-  const checkboxHandler = (e: { target: { checked: any; value: any } }) => {
+  const checkboxHandler = (e: { target: { checked: boolean; value: string } }) => {
     if (e.target.checked) {
-      setCheckItems([...checkItems, e.target.value])
+      setCheckItems([...checkItems, Number(e.target.value)])
     } else {
-      setCheckItems(checkItems.filter((el: any) => el !== e.target.value))
+      setCheckItems(checkItems.filter((el) => el !== Number(e.target.value)))
     }
   }
 
-  async function updateOrderStatus(submitValue: any) {
+  async function updateOrderStatus(submitValue: statusSubmitType) {
     const response = await fetch(`https://iko-lenssis.click/admin/updateOrderStatus`, {
       method: 'PUT',
       headers: {
@@ -36,22 +35,22 @@ function OrderListPage() {
     return response.json()
   }
 
-  const { mutate } = useMutation((submitValue: any) => updateOrderStatus(submitValue), {
+  const { mutate } = useMutation((submitValue: statusSubmitType) => updateOrderStatus(submitValue), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['orderList', currentPage])
+      queryClient.invalidateQueries(['orderList'])
     }
   })
 
-  const updateOrderStatusHandler = (e: any) => {
-    const status = e.target.value
-    checkItems.map((orderId: string) => {
+  const updateOrderStatusHandler = (e: { target: { value: string } }) => {
+    const status = Number(e.target.value)
+    checkItems.map((orderId: number) => {
       const submitValue = { orderId, status }
       mutate(submitValue)
     })
   }
 
   const refreshHandler = () => {
-    queryClient.invalidateQueries(['orderList', currentPage])
+    queryClient.invalidateQueries(['orderList'])
   }
 
   const orderStatus = (status: number) => {
