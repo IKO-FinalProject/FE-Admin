@@ -4,7 +4,7 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   width: string
   titleHidden?: string
-  justifyCenter: string
+  justifyCenter?: string
   initialValue: number
 }
 
