@@ -68,7 +68,7 @@ function NavBar() {
             menuList={[
               { title: '상품리스트', link: '/productlist' },
               { title: '상품 등록', link: '/addproduct' },
-              { title: '연관상품 관리', link: '/' }
+              { title: '연관상품 관리', link: '/relativeproduct' }
             ]}
           />
         )}
@@ -96,8 +96,8 @@ function NavBar() {
           <DropDownMenu
             menuList={[
               { title: '주문 리스트', link: '/orderlist' },
-              { title: '주문 관리', link: '/' },
-              { title: '배송정보 관리', link: '/' }
+              { title: '주문 관리', link: '/ordermanage' },
+              { title: '배송정보 관리', link: '/shippingmanage' }
             ]}
           />
         )}
