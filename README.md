@@ -1,6 +1,6 @@
 # [렌시스재팬](https://lenssis.jp/) 페이지 리뉴얼 - 관리자페이지
 
-#### 배포주소 : https://lenssis-admin-page.vercel.app/
+
 #### notion : https://quickest-asterisk-75d.notion.site/BE-FE2-UXUI3-_1-e1ca7b5e27354b08a033573299dde83d
 #### figma : https://www.figma.com/file/SL2HjUJ0aujggFSfo9biR9/%EC%BB%AC%EB%9F%AC%EB%A0%8C%EC%A1%B0-3?node-id=2039%3A77754
 
